@@ -64,8 +64,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <Providers defaultTheme="system" enableSystem attribute="class">
           <div className="flex min-h-screen flex-col">
             <Banner
-              title="Build your own marketplace"
-              description="Use our Platform Starter Kit to go live in 15 minutes."
+              title="Build your own barbershop app"
+              
               ctaLink="https://go.cal.com/starter-kit"
             />
             <UseCalAtoms

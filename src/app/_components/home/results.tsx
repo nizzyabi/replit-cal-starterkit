@@ -54,7 +54,8 @@ export default function ResultsCard({
               className="h-full w-full rounded-md object-cover"
               height={265}
               width={380}
-              
+              onLoadingComplete={() => setIsLoading(false)}
+              onError={setError}
             />
           )}
         </div>
