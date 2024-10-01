@@ -49,14 +49,12 @@ export default function ResultsCard({
           )}>
           {!error && (
             <Image
-              src={`avatars/${userId}?width=380&height=265`}
+              src={`/hero.jpg`}
               alt={title}
               className="h-full w-full rounded-md object-cover"
               height={265}
               width={380}
-              objectFit="cover"
-              onLoadingComplete={() => setIsLoading(false)}
-              onError={setError}
+              
             />
           )}
         </div>
