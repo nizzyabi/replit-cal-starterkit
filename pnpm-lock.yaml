@@ -85,16 +85,16 @@ dependencies:
     version: 5.25.0(react@18.3.1)
   '@trpc/client':
     specifier: next
-    version: 11.0.0-rc.498(@trpc/server@11.0.0-rc.498)
+    version: 11.0.0-rc.553(@trpc/server@11.0.0-rc.553)
   '@trpc/next':
     specifier: next
-    version: 11.0.0-rc.498(@tanstack/react-query@5.25.0)(@trpc/client@11.0.0-rc.498)(@trpc/react-query@11.0.0-rc.498)(@trpc/server@11.0.0-rc.498)(next@14.3.0-canary.37)(react-dom@18.3.1)(react@18.3.1)
+    version: 11.0.0-rc.553(@tanstack/react-query@5.25.0)(@trpc/client@11.0.0-rc.553)(@trpc/react-query@11.0.0-rc.553)(@trpc/server@11.0.0-rc.553)(next@14.3.0-canary.37)(react-dom@18.3.1)(react@18.3.1)
   '@trpc/react-query':
     specifier: next
-    version: 11.0.0-rc.498(@tanstack/react-query@5.25.0)(@trpc/client@11.0.0-rc.498)(@trpc/server@11.0.0-rc.498)(react-dom@18.3.1)(react@18.3.1)
+    version: 11.0.0-rc.553(@tanstack/react-query@5.25.0)(@trpc/client@11.0.0-rc.553)(@trpc/server@11.0.0-rc.553)(react-dom@18.3.1)(react@18.3.1)
   '@trpc/server':
     specifier: next
-    version: 11.0.0-rc.498
+    version: 11.0.0-rc.553
   '@vercel/analytics':
     specifier: ^1.2.2
     version: 1.2.2(next@14.3.0-canary.37)(react@18.3.1)
@@ -113,6 +113,9 @@ dependencies:
   dayjs:
     specifier: ^1.11.10
     version: 1.11.10
+  framer-motion:
+    specifier: ^11.9.0
+    version: 11.9.0(react-dom@18.3.1)(react@18.3.1)
   lucide-react:
     specifier: ^0.364.0
     version: 0.364.0(react@18.3.1)
@@ -2978,21 +2981,21 @@ packages:
       - supports-color
     dev: true
 
-  /@trpc/client@11.0.0-rc.498(@trpc/server@11.0.0-rc.498):
-    resolution: {integrity: sha512-a1VjvLHCo8gPENMfzI8lVF1ys6kOGI3f/cIAZUMB0d2TlkDERlFYANnSnzFvmiKy6ICh3lsQQ3OIMmIfyd8OtQ==}
+  /@trpc/client@11.0.0-rc.553(@trpc/server@11.0.0-rc.553):
+    resolution: {integrity: sha512-ICgziilbuAslRgHIVJZ162KaHQRpHXA1C1LPRsNpxPa9aStPF7eThAjn4V3JmDyJsuDLQgAmqLVRImlLPMYR5Q==}
     peerDependencies:
-      '@trpc/server': 11.0.0-rc.498+5714423cc
+      '@trpc/server': 11.0.0-rc.553+9b629cc67
     dependencies:
-      '@trpc/server': 11.0.0-rc.498
+      '@trpc/server': 11.0.0-rc.553
     dev: false
 
-  /@trpc/next@11.0.0-rc.498(@tanstack/react-query@5.25.0)(@trpc/client@11.0.0-rc.498)(@trpc/react-query@11.0.0-rc.498)(@trpc/server@11.0.0-rc.498)(next@14.3.0-canary.37)(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-GoaRReGOd949aZbzJI8xv+QFcLUpp7+BOw5NdgLjEk47Nin2TcLl19Tk8JhXImFzwDLF8JQFrHvk91mnb6ka0Q==}
+  /@trpc/next@11.0.0-rc.553(@tanstack/react-query@5.25.0)(@trpc/client@11.0.0-rc.553)(@trpc/react-query@11.0.0-rc.553)(@trpc/server@11.0.0-rc.553)(next@14.3.0-canary.37)(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-1bIuG4nKYmTuVFqgsqSbOGgIz2LsUcb1wXrK1zlfikRQHhssSMmpXSLSANfZffs/6lbFLVs057XaS9LX5HmCsw==}
     peerDependencies:
-      '@tanstack/react-query': ^5.49.2
-      '@trpc/client': 11.0.0-rc.498+5714423cc
-      '@trpc/react-query': 11.0.0-rc.498+5714423cc
-      '@trpc/server': 11.0.0-rc.498+5714423cc
+      '@tanstack/react-query': ^5.54.1
+      '@trpc/client': 11.0.0-rc.553+9b629cc67
+      '@trpc/react-query': 11.0.0-rc.553+9b629cc67
+      '@trpc/server': 11.0.0-rc.553+9b629cc67
       next: '*'
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
@@ -3003,32 +3006,32 @@ packages:
         optional: true
     dependencies:
       '@tanstack/react-query': 5.25.0(react@18.3.1)
-      '@trpc/client': 11.0.0-rc.498(@trpc/server@11.0.0-rc.498)
-      '@trpc/react-query': 11.0.0-rc.498(@tanstack/react-query@5.25.0)(@trpc/client@11.0.0-rc.498)(@trpc/server@11.0.0-rc.498)(react-dom@18.3.1)(react@18.3.1)
-      '@trpc/server': 11.0.0-rc.498
+      '@trpc/client': 11.0.0-rc.553(@trpc/server@11.0.0-rc.553)
+      '@trpc/react-query': 11.0.0-rc.553(@tanstack/react-query@5.25.0)(@trpc/client@11.0.0-rc.553)(@trpc/server@11.0.0-rc.553)(react-dom@18.3.1)(react@18.3.1)
+      '@trpc/server': 11.0.0-rc.553
       next: 14.3.0-canary.37(@babel/core@7.25.2)(@opentelemetry/api@1.8.0)(react-dom@18.3.1)(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
     dev: false
 
-  /@trpc/react-query@11.0.0-rc.498(@tanstack/react-query@5.25.0)(@trpc/client@11.0.0-rc.498)(@trpc/server@11.0.0-rc.498)(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-il/fgO9DSTHmrJbDInGNl8PymLo19CEfIjBXmerTm4hg/p438fQb4ZKDVbpBxEThgAaaP6D0HTELWn5VDWG3VQ==}
+  /@trpc/react-query@11.0.0-rc.553(@tanstack/react-query@5.25.0)(@trpc/client@11.0.0-rc.553)(@trpc/server@11.0.0-rc.553)(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-m88HBhpfIDJccJCXycHtkGS82RG2TVPsZUFIWswR8m6ip5eFNmqWASanu7DiiFbY6sufLT1S8ee28towrPUgoA==}
     peerDependencies:
-      '@tanstack/react-query': ^5.49.2
-      '@trpc/client': 11.0.0-rc.498+5714423cc
-      '@trpc/server': 11.0.0-rc.498+5714423cc
+      '@tanstack/react-query': ^5.54.1
+      '@trpc/client': 11.0.0-rc.553+9b629cc67
+      '@trpc/server': 11.0.0-rc.553+9b629cc67
       react: '>=18.2.0'
       react-dom: '>=18.2.0'
     dependencies:
       '@tanstack/react-query': 5.25.0(react@18.3.1)
-      '@trpc/client': 11.0.0-rc.498(@trpc/server@11.0.0-rc.498)
-      '@trpc/server': 11.0.0-rc.498
+      '@trpc/client': 11.0.0-rc.553(@trpc/server@11.0.0-rc.553)
+      '@trpc/server': 11.0.0-rc.553
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
     dev: false
 
-  /@trpc/server@11.0.0-rc.498:
-    resolution: {integrity: sha512-LECCOz8JNB67CBasPA6fkLbhJIbUQRP1wq02xUfUMeaSEZFWJL+7fcTgLaWFQSHMMnMsvkLuDuDDkUSCF2SXmg==}
+  /@trpc/server@11.0.0-rc.553:
+    resolution: {integrity: sha512-pYUhxV3QU834jP1ugJk1uhtPwwaY1ymIuupb4DiWOhNCl68syuXPlUdD8IYsYKd3BjLkmnjlsOUMoyd/aoOF/Q==}
     dev: false
 
   /@types/cookie@0.6.0:
@@ -4906,6 +4909,25 @@ packages:
     engines: {node: '>=12.20.0'}
     dependencies:
       fetch-blob: 3.2.0
+    dev: false
+
+  /framer-motion@11.9.0(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-nCfGxvsQecVLjjYDu35G2F5ls+ArE3FBfhxV0RSiisMaUKqteq5DMBFNRKwMyVj+VqKTNhawt+BV480YCHKFlQ==}
+    peerDependencies:
+      '@emotion/is-prop-valid': '*'
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    peerDependenciesMeta:
+      '@emotion/is-prop-valid':
+        optional: true
+      react:
+        optional: true
+      react-dom:
+        optional: true
+    dependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      tslib: 2.7.0
     dev: false
 
   /fs-extra@7.0.1:
