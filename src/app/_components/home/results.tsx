@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { type FilterOption, type User } from "@prisma/client";
+import { motion } from "framer-motion";
 import { ListFilter, Loader } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -24,34 +25,33 @@ export default function ResultsCard({
   slug,
   userId,
   title,
-  description,
+  
   query,
 }: {
   slug: string;
   userId?: string;
   title: string;
-  description: string;
+ 
   query?: string;
 }) {
   const queryIndexTitle = title.toLowerCase().indexOf(query?.toLowerCase() ?? "");
-  const queryIndexDescription = description.toLowerCase().indexOf(query?.toLowerCase() ?? "");
   const [error, setError] = useState<SyntheticEvent<HTMLImageElement, Event> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   return (
     <Link href={"/" + slug} className="col-span-1 flex">
-      <Card className="mx-auto overflow-hidden">
+      <Card className="mx-auto overflow-hidden transition-transform duration-300 ease-in-out hover:scale-[1.05]">
         <div
           className={cn(
-            "h-[265px] w-[380px] rounded-md",
+            "h-[265px] w-[380px] rounded-md transition-all duration-300",
             error && "bg-muted",
             isLoading && "animate-pulse bg-muted"
           )}>
           {!error && (
             <Image
-              src={`/hero.jpg`}
+              src={`public/hero.jpg`}
               alt={title}
-              className="h-full w-full rounded-md object-cover"
+              className="h-full w-full rounded-md object-cover transition-opacity duration-300 ease-in-out"
               height={265}
               width={380}
               onLoadingComplete={() => setIsLoading(false)}
@@ -61,7 +61,6 @@ export default function ResultsCard({
         </div>
         <CardHeader>
           <CardTitle className="text-xl">
-            {/* this highlights the search query for the title */}
             {queryIndexTitle != undefined && query ? (
               <>
                 {title.substring(0, queryIndexTitle)}
@@ -74,8 +73,7 @@ export default function ResultsCard({
               title
             )}
           </CardTitle>
-          <CardDescription>
-            {/* this highlights the search query for the title */}
+          {/* <CardDescription className="transition-colors duration-300 ease-in-out hover:text-muted-foreground">
             {queryIndexDescription != undefined && query ? (
               <>
                 {description.substring(0, queryIndexDescription)}
@@ -87,7 +85,7 @@ export default function ResultsCard({
             ) : (
               description
             )}
-          </CardDescription>
+          </CardDescription> */}
         </CardHeader>
       </Card>
     </Link>
@@ -135,7 +133,6 @@ export function Results(props: { experts: UsersWithFilterOptions; signedOut: JSX
                         slug={username ?? ""}
                         userId={id ?? ""}
                         title={name ?? "Your title"}
-                        description={bio ?? "Your bio"}
                         query={query ?? undefined}
                       />
                     ))}

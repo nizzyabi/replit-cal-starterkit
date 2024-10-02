@@ -66,21 +66,12 @@ export default async function ExpertDetails({ params }: { params: { expertUserna
         </div>
       </header>
       <div className="mx-auto mt-4 grid w-full gap-2 px-8 sm:px-10 lg:px-12 2xl:px-36">
-        <Card className="sm:col-span-2">
-          <CardHeader className="pb-3">
-            <CardTitle>About Us</CardTitle>
-            <p className="max-w-lg text-balance leading-relaxed">{expert.bio}</p>
-          </CardHeader>
-        </Card>
-      </div>
-      <div className="mx-auto mt-4 grid w-full gap-2 px-8 sm:px-10 lg:px-12 2xl:px-36">
         {eventTypes.status === "error" ? (
           <div>User Events not found</div>
         ) : (
           <Card>
             <CardHeader>
-              <CardTitle>Book Us</CardTitle>
-              <CardDescription>Book us for any of the below events.</CardDescription>
+              <CardTitle>Book with {expert.name}</CardTitle>
             </CardHeader>
             <CardContent>
               <Table>
@@ -133,6 +124,14 @@ export default async function ExpertDetails({ params }: { params: { expertUserna
             </CardFooter>
           </Card>
         )}
+      </div>
+      <div className="mx-auto mt-4 grid w-full gap-2 px-8 sm:px-10 lg:px-12 2xl:px-36">
+        <Card className="sm:col-span-2">
+          <CardHeader className="pb-3">
+            <CardTitle>Cuts</CardTitle>
+            {/* show images here of cuts. */}
+          </CardHeader>
+        </Card>
       </div>
     </div>
   );
