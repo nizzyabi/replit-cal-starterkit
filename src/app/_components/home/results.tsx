@@ -25,13 +25,13 @@ export default function ResultsCard({
   slug,
   userId,
   title,
-  
+
   query,
 }: {
   slug: string;
   userId?: string;
   title: string;
- 
+
   query?: string;
 }) {
   const queryIndexTitle = title.toLowerCase().indexOf(query?.toLowerCase() ?? "");
@@ -112,6 +112,15 @@ export function Results(props: { experts: UsersWithFilterOptions; signedOut: JSX
 
   return (
     <Fragment>
+      <div
+        className="flex min-h-[600px] flex-col justify-center bg-cover bg-center bg-no-repeat py-20"
+        style={{ backgroundImage: "url('/barber.svg')" }}>
+        <div className="container  flex flex-col items-center justify-center gap-12">
+          <h1 className="font-display text-7xl font-extrabold tracking-wide text-white shadow-xl">
+            <Balancer>Get your dream haircut</Balancer>
+          </h1>
+        </div>
+      </div>
       <div className="flex-1">
         <div className="sm:my-10">
           <Suspense
