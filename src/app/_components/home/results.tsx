@@ -25,17 +25,15 @@ export default function ResultsCard({
   slug,
   userId,
   title,
-  image,
   query,
 }: {
   slug: string;
   userId?: string;
   title: string;
-  image: any;
   query?: string;
 }) {
   const queryIndexTitle = title.toLowerCase().indexOf(query?.toLowerCase() ?? "");
-  const [error, setError] = useState<SyntheticEvent<HTMLImageElement, Event> | null>(null);
+  const [error, setError] = useState<Error | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   return (
@@ -47,15 +45,18 @@ export default function ResultsCard({
             error && "bg-muted",
             isLoading && "bg-muted"
           )}>
-          {!error && (
-            <img
-              src={image}
-              alt={title}
-              className="h-full w-full rounded-t-md object-cover transition-opacity duration-300 ease-in-out"
-              height={265}
-              width={380}
-            />
-          )}
+          <Image
+            src={`/avatars/${userId}?width=380&height=265`}
+            alt={title}
+            className="h-full w-full rounded-t-md object-cover transition-opacity duration-300 ease-in-out"
+            height={265}
+            width={380}
+            onError={(e) => {
+              setError(e.error);
+              setIsLoading(false);
+            }}
+            onLoad={() => setIsLoading(false)}
+          />
         </div>
         <CardHeader>
           <CardTitle className="text-xl">
@@ -136,7 +137,6 @@ export function Results(props: { experts: UsersWithFilterOptions; signedOut: JSX
                   {experts.length &&
                     experts.map(({ image, username, name, bio, id }) => (
                       <ResultsCard
-                        image={image}
                         key={username}
                         slug={username ?? ""}
                         userId={id ?? ""}

@@ -49,6 +49,7 @@ model User {
   email                 String?               @unique
   emailVerified         DateTime?
   hashedPassword        String?
+  haircutImages        String[]
   image                 String?
   calAccountId          Int?                  @unique
   calAccessToken        String?               @unique

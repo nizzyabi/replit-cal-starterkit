@@ -3,6 +3,7 @@ import SupabaseReactDropzone from "../_components/supabase-react-dropzone";
 import { currentUser } from "@/auth";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Info } from "lucide-react";
+import SupabaseHaircutDropzone from "../_components/supabase-haircut-dropzone";
 
 export const dynamic = "force-dynamic";
 
@@ -49,6 +50,22 @@ export default async function DashboardSettingsProfile() {
         <CardContent>
           <ExpertEditForm id="bio" name="bio" placeholder={expert.bio ?? "Your Bio"} />
         </CardContent>
+      </Card>
+      <Card x-chunk="dashboard-04-chunk-1">
+        <CardHeader>
+          <CardTitle>Hair cuts</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-col gap-4">
+            <SupabaseHaircutDropzone userId={expert.id} />
+          </div>
+        </CardContent>
+        <CardFooter className="border-t px-6 py-6">
+          <CardDescription className="flex items-center gap-1">
+            <Info className="size-3.5" />
+            The Image upload auto-saves.
+          </CardDescription>
+        </CardFooter>
       </Card>
     </div>
   );

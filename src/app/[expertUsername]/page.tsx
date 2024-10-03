@@ -1,5 +1,4 @@
 import { cal } from "@/cal/api";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -7,12 +6,15 @@ import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { db } from "prisma/client";
+import { createClient } from "@supabase/supabase-js";
+import { env } from "@/env";
 
 export const dynamic = "force-dynamic";
 export default async function ExpertDetails({ params }: { params: { expertUsername: string } }) {
   const expert = await db.user.findUnique({
     where: { username: params.expertUsername },
     select: {
+      haircutImages: true,
       image: true,
       id: true,
       calAccessToken: true,
@@ -50,6 +52,23 @@ export default async function ExpertDetails({ params }: { params: { expertUserna
       `[ExpertDetails] Event not found for expert username '${params.expertUsername}'. Check logs above for more info.`
     );
   }
+  const supabase = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+
+  // Fetch haircut image URLs
+  const { data: haircutImages, error } = await supabase.storage
+    .from("haircuts")
+    .list(`${expert.id}/`);
+
+  let imageUrls: string[] = [];
+
+  if (error) {
+    console.error("Error fetching haircut images:", error);
+  } else if (haircutImages) {
+    imageUrls = haircutImages.map(file => 
+      supabase.storage.from("haircuts").getPublicUrl(`${expert.id}/${file.name}`).data.publicUrl
+    );
+  }
+
   return (
     <div className="mb-4 flex flex-1 flex-col items-center gap-4 overflow-auto">
       {/* <header className="flex w-full flex-col justify-between gap-4 rounded-md bg-muted/50 px-8 py-4  sm:px-10 lg:flex-row lg:px-12 2xl:px-36">
@@ -128,9 +147,20 @@ export default async function ExpertDetails({ params }: { params: { expertUserna
       </div>
       <div className="mx-auto mt-4 grid w-full gap-2 px-8 sm:px-10 lg:px-12 2xl:px-36">
         <Card className="sm:col-span-2">
-          <CardHeader className="pb-3">
+          <CardHeader>
             <CardTitle>Cuts</CardTitle>
-            {/* show images here of cuts. */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 pt-5">
+              {imageUrls.map((imageUrl, index) => (
+                <img
+                  key={index}
+                  alt={`Haircut ${index + 1}`}
+                  className="aspect-square rounded-md object-cover"
+                  src={imageUrl}
+                  height={128}
+                  width={128}
+                />
+              ))}
+            </div>
           </CardHeader>
         </Card>
       </div>

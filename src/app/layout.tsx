@@ -1,7 +1,6 @@
 import Banner from "./_components/banner";
 import UseCalAtoms from "./_components/use-cal";
 import { Providers } from "./providers";
-import { TailwindIndicator } from "./tailwind-indicator";
 import { currentUser } from "@/auth";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
@@ -65,7 +64,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <div className="flex min-h-screen flex-col">
             <Banner
               title="Build your own barbershop scheduling app"
-              
               ctaLink="https://go.cal.com/starter-kit"
             />
             <UseCalAtoms
@@ -73,7 +71,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               {children}
             </UseCalAtoms>
           </div>
-          <TailwindIndicator />
+          {/* <TailwindIndicator /> */}
         </Providers>
         <Toaster />
       </body>
