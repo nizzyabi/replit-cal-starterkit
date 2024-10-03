@@ -13,6 +13,7 @@ export default async function ExpertDetails({ params }: { params: { expertUserna
   const expert = await db.user.findUnique({
     where: { username: params.expertUsername },
     select: {
+      image: true,
       id: true,
       calAccessToken: true,
       calRefreshToken: true,
@@ -51,12 +52,12 @@ export default async function ExpertDetails({ params }: { params: { expertUserna
   }
   return (
     <div className="mb-4 flex flex-1 flex-col items-center gap-4 overflow-auto">
-      <header className="flex w-full flex-col justify-between gap-4 rounded-md bg-muted/50 px-8 py-4  sm:px-10 lg:flex-row lg:px-12 2xl:px-36">
+      {/* <header className="flex w-full flex-col justify-between gap-4 rounded-md bg-muted/50 px-8 py-4  sm:px-10 lg:flex-row lg:px-12 2xl:px-36">
         <div className="flex items-center gap-x-6">
-          <Image
+          <img
             alt="Expert image"
             className="aspect-square rounded-md object-cover"
-            src={`avatars/${expert.id}`}
+            src={expert.image}
             height="64"
             width="64"
           />
@@ -64,7 +65,7 @@ export default async function ExpertDetails({ params }: { params: { expertUserna
             <h1 className="text-2xl font-semibold capitalize leading-none tracking-tight">{expert.name}</h1>
           </div>
         </div>
-      </header>
+      </header> */}
       <div className="mx-auto mt-4 grid w-full gap-2 px-8 sm:px-10 lg:px-12 2xl:px-36">
         {eventTypes.status === "error" ? (
           <div>User Events not found</div>

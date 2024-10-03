@@ -25,13 +25,13 @@ export default function ResultsCard({
   slug,
   userId,
   title,
-
+  image,
   query,
 }: {
   slug: string;
   userId?: string;
   title: string;
-
+  image: any;
   query?: string;
 }) {
   const queryIndexTitle = title.toLowerCase().indexOf(query?.toLowerCase() ?? "");
@@ -43,19 +43,17 @@ export default function ResultsCard({
       <Card className="mx-auto overflow-hidden transition-transform duration-300 ease-in-out hover:scale-[1.05]">
         <div
           className={cn(
-            "h-[265px] w-[380px] rounded-md transition-all duration-300",
+            "h-[365px] w-[480px] rounded-md transition-all duration-300",
             error && "bg-muted",
-            isLoading && "animate-pulse bg-muted"
+            isLoading && "bg-muted"
           )}>
           {!error && (
-            <Image
-              src={`public/hero.jpg`}
+            <img
+              src={image}
               alt={title}
-              className="h-full w-full rounded-md object-cover transition-opacity duration-300 ease-in-out"
+              className="h-full w-full rounded-t-md object-cover transition-opacity duration-300 ease-in-out"
               height={265}
               width={380}
-              onLoadingComplete={() => setIsLoading(false)}
-              onError={setError}
             />
           )}
         </div>
@@ -121,7 +119,7 @@ export function Results(props: { experts: UsersWithFilterOptions; signedOut: JSX
           </h1>
         </div>
       </div>
-      <div className="flex-1">
+      <div className="flex-1 mt-10">
         <div className="sm:my-10">
           <Suspense
             fallback={
@@ -133,11 +131,12 @@ export function Results(props: { experts: UsersWithFilterOptions; signedOut: JSX
             }>
             <div className="block sm:flex">
               <main className="w-full p-4 pt-0">
-                <div className="grid grid-cols-1 gap-2 space-x-2 md:grid-cols-3 2xl:grid-cols-4">
+                <div className="grid grid-cols-1 gap-5 space-x-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
                   {!query && props.signedOut}
                   {experts.length &&
-                    experts.map(({ username, name, bio, id }) => (
+                    experts.map(({ image, username, name, bio, id }) => (
                       <ResultsCard
+                        image={image}
                         key={username}
                         slug={username ?? ""}
                         userId={id ?? ""}

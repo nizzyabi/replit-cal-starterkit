@@ -33,6 +33,7 @@ export const SignupForm = () => {
 
   return (
     <form action={dispatch}>
+      <Link href="/dashboard">Dashboard</Link>
       <Card className="mx-auto max-w-sm">
         <CardHeader>
           <CardTitle className="text-xl">Sign Up</CardTitle>
