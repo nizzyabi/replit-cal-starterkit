@@ -113,7 +113,7 @@ export default async function DashboardSettingsBookingEvents() {
                         },
                         {
                           name: "slug",
-                          label: "URL Slug",
+                          label: "Booking URL",
                           pattern: "^[a-z0-9]+(?:-[a-z0-9]+)*$",
                           required: true,
                         },
@@ -125,24 +125,14 @@ export default async function DashboardSettingsBookingEvents() {
                           maxlength: "30",
                           required: true,
                         },
-                        {
-                          name: "description",
-                          label: "Description",
-                          type: "text",
-                          minlength: "3",
-                          maxlength: "300",
-                        },
+                        
                       ] as const
                     ).map(({ name, label, ...inputAttributes }) => (
                       <Fragment key={name}>
                         <Label htmlFor={name} className="text-right">
                           {label}
                         </Label>
-                        {name === "description" ? (
-                          <Textarea id={name} name={name} {...inputAttributes} className="col-span-3" />
-                        ) : (
-                          <Input id={name} name={name} {...inputAttributes} className="col-span-3" />
-                        )}
+                        <Input id={name} name={name} {...inputAttributes} className="col-span-3" />
                       </Fragment>
                     ))}
                   </div>
@@ -164,9 +154,9 @@ export default async function DashboardSettingsBookingEvents() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead>Locations</TableHead>
+                <TableHead>Booking Name</TableHead>
+                
+                
                 <TableHead className="hidden md:table-cell">Duration (min)</TableHead>
                 <TableHead>
                   <span className="sr-only">Actions</span>
@@ -178,25 +168,9 @@ export default async function DashboardSettingsBookingEvents() {
                 <TableRow key={eventType.id}>
                   <TableCell>
                     <div className="font-medium capitalize">{eventType.title}</div>
-                    <div className="hidden text-sm text-muted-foreground md:inline">/{eventType.slug}</div>
                   </TableCell>
-                  <TableCell>
-                    <div className="hidden text-sm text-muted-foreground md:inline">
-                      {eventType.description}
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    {eventType.locations?.map((location, idx) => (
-                      <Badge key={idx} variant="default">
-                        {location.type === "integrations:daily" && (
-                          <div className="text-emphasis inline-flex items-center justify-center gap-x-1 text-xs font-medium leading-3">
-                            <Video className="size-3" />
-                            Cal Video
-                          </div>
-                        )}
-                      </Badge>
-                    ))}
-                  </TableCell>
+                  
+                  
                   <TableCell className="hidden md:table-cell">{eventType.length}</TableCell>
                   <TableCell>
                     <DropdownMenu>

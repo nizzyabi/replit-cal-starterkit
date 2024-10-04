@@ -83,85 +83,7 @@ export default async function Dashboard() {
 
   return (
     <main className="flex flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-8">
-      <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
-        <Card className="sm:col-span-2" x-chunk="dashboard-05-chunk-0">
-          <CardHeader className="pb-3">
-            <CardTitle>Your Bookings</CardTitle>
-            <CardDescription className="max-w-lg text-balance leading-relaxed">
-              See all your bookings for your services.
-            </CardDescription>
-          </CardHeader>
-          <CardFooter className="pt-6">
-            <Link href="/dashboard/settings/booking-events">
-              <Button>
-                Manage booking events
-                <ArrowRight className="ml-1 size-4" />
-              </Button>
-            </Link>
-          </CardFooter>
-        </Card>
-        <Card x-chunk="dashboard-05-chunk-1">
-          <CardHeader className="pb-2">
-            <CardDescription>This Week</CardDescription>
-            <CardTitle className="text-4xl">{thisWeekBookings.length}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-xs text-muted-foreground">
-              {lastWeekBookings.length > 0
-                ? `${changeFromPrevious(thisWeekBookings.length, lastWeekBookings.length)}% from last week`
-                : "From 0 last week"}
-            </div>
-          </CardContent>
-          <CardFooter>
-            <Progress
-              value={Math.abs(changeFromPrevious(thisWeekBookings.length, lastWeekBookings.length))}
-              aria-label={
-                lastWeekBookings.length > 0
-                  ? `${changeFromPrevious(thisWeekBookings.length, lastWeekBookings.length)}% from last week`
-                  : "Unknown percentage from last week (no bookings)"
-              }
-              className={cn(
-                Math.round(
-                  ((thisWeekBookings.length - lastWeekBookings.length) / lastWeekBookings.length) * 100
-                ) < 0
-                  ? "[&>div]:bg-destructive/80"
-                  : "[&>div]:bg-success"
-              )}
-            />
-          </CardFooter>
-        </Card>
-        <Card x-chunk="dashboard-05-chunk-2">
-          <CardHeader className="pb-2">
-            <CardDescription>This Month</CardDescription>
-            <CardTitle className="text-4xl">{thisMonthBookings.length}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-xs text-muted-foreground">
-              {lastMonthBookings.length > 0
-                ? `${changeFromPrevious(thisMonthBookings.length, lastMonthBookings.length)}% from last week`
-                : "From 0 last month"}
-            </div>
-          </CardContent>
-          <CardFooter>
-            <Progress
-              value={Math.abs(changeFromPrevious(thisMonthBookings.length, lastMonthBookings.length))}
-              aria-label={
-                lastMonthBookings.length > 0
-                  ? `${changeFromPrevious(thisMonthBookings.length, lastMonthBookings.length)}% from last week`
-                  : "Unknown percentage from last month (no bookings)"
-              }
-              className={cn(
-                Math.round(
-                  ((thisMonthBookings.length - lastMonthBookings.length) / lastMonthBookings.length) * 100
-                ) < 0
-                  ? "[&>div]:bg-destructive/80"
-                  : "[&>div]:bg-success"
-              )}
-            />
-          </CardFooter>
-        </Card>
-      </div>
-      <Suspense>
+       <Suspense>
         <CalAccount>
           {(calAccount) => (
             <BookingsTable
@@ -180,6 +102,50 @@ export default async function Dashboard() {
           )}
         </CalAccount>
       </Suspense>
+      <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
+        <Card className="sm:col-span-2" x-chunk="dashboard-05-chunk-0">
+          <CardHeader className="pb-3">
+            <CardTitle>Your Bookings</CardTitle>
+            <CardDescription className="max-w-lg text-balance leading-relaxed">
+              See all your bookings for your services.
+            </CardDescription>
+            <Link href="/dashboard/settings/booking-events" className="pt-2">
+              <Button>
+                Manage booking events
+                <ArrowRight className="ml-1 size-4" />
+              </Button>
+            </Link>
+          </CardHeader>
+         
+        </Card>
+        <Card x-chunk="dashboard-05-chunk-1">
+          <CardHeader className="pb-2">
+            <CardDescription>This Week</CardDescription>
+            <CardTitle className="text-4xl">{thisWeekBookings.length}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-xs text-muted-foreground">
+              {lastWeekBookings.length > 0
+                ? `${changeFromPrevious(thisWeekBookings.length, lastWeekBookings.length)}% from last week`
+                : "From 0 last week"}
+            </div>
+          </CardContent>
+        </Card>
+        <Card x-chunk="dashboard-05-chunk-2">
+          <CardHeader className="pb-2">
+            <CardDescription>This Month</CardDescription>
+            <CardTitle className="text-4xl">{thisMonthBookings.length}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-xs text-muted-foreground">
+              {lastMonthBookings.length > 0
+                ? `${changeFromPrevious(thisMonthBookings.length, lastMonthBookings.length)}% from last week`
+                : "From 0 last month"}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+     
     </main>
   );
 }

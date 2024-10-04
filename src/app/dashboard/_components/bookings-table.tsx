@@ -76,13 +76,13 @@ export const BookingsTable = (props: {
               <Card>
                 <CardHeader className="px-7">
                   <CardTitle>Bookings</CardTitle>
-                  <CardDescription>Bookings from potential customers.</CardDescription>
+                  <CardDescription>Bookings from customers</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead>Initiator</TableHead>
+                        <TableHead>Booker</TableHead>
                         <TableHead className="hidden sm:table-cell">Event Type</TableHead>
                         <TableHead className="hidden sm:table-cell">Status</TableHead>
                         <TableHead className="hidden md:table-cell">Date</TableHead>
@@ -98,7 +98,7 @@ export const BookingsTable = (props: {
                             <TableRow
                               key={booking.id}
                               className={cn(
-                                "data-[current=true]:bg-muted-foreground/30",
+                                "data-[current=true]:bg-muted-foreground/10",
                                 isEven && "bg-accent"
                               )}
                               data-current={
@@ -190,87 +190,32 @@ export const BookingsTable = (props: {
             <div className="grid gap-3">
               <div className="font-semibold">Booking Details</div>
               <ul className="grid gap-3">
+                
                 <li className="flex items-center justify-between text-muted-foreground">
-                  <span>Booking Uid:</span>
-                  <span>{selectedElement?.uid}</span>
-                </li>
-                <li className="flex items-center justify-between text-muted-foreground">
-                  <span>Date:</span>
+                  <span>Date</span>
                   <span>
                     {selectedElement?.startTime
                       ? dayjs(selectedElement?.startTime).format("MMMM DD, YYYY")
                       : "MMMM DD, YYYY"}
                   </span>
                 </li>
-                <li className="flex items-center justify-between text-muted-foreground">
-                  <span>Status:</span>
-                  <span>
-                    <Badge
-                      variant={
-                        // so that we show the destructive badge for cancelled meetings, and success badge for confirmed meetings
-                        (["CANCELLED", "REJECTED"] as Array<BookingStatus>).includes(
-                          // @ts-expect-error: There are missing types in the openapi specs for cal's api, this should likely be: BookingStatus
-                          selectedElement?.status
-                        )
-                          ? "destructive"
-                          : (["PENDING", "ACCEPTED", "AWAITING HOST"] as Array<BookingStatus>)
-                                // @ts-expect-error: There are missing types in the openapi specs for cal's api, this should likely be: BookingStatus
-                                .includes(selectedElement?.status)
-                            ? "success"
-                            : "default"
-                      }
-                      className={cn(
-                        "w-fit text-xs",
-                        // so that we show a gray badge for pending meetings
-                        (selectedElement?.status as BookingStatus) === "PENDING" &&
-                          "border-transparent bg-muted text-muted-foreground hover:bg-muted/80"
-                      )}>
-                      {/* @ts-expect-error: There are missing types in the openapi specs for cal's api, this should likely be: BookingStatus */}
-                      {selectedElement?.status}
-                    </Badge>
-                  </span>
-                </li>
-              </ul>
-              <Separator className="my-2" />
-              <div className="font-semibold">Attendees</div>
-              <ul className="grid gap-3">
-                {who.attendees?.map((attendee, idx) => (
-                  <li key={idx} className="flex items-center justify-between">
-                    <span className="capitalize text-muted-foreground">{attendee.name}</span>
-                    <span>{attendee.email}</span>
-                  </li>
-                ))}
+               
               </ul>
             </div>
-            <Separator className="my-4" />
-            <div className="grid gap-3">
-              <div className="font-semibold">Customer Information</div>
+            <div className="grid gap-3 mt-3">
               <dl className="grid gap-3">
-                <div className="flex items-center justify-between">
-                  <dt className="text-muted-foreground">Customer</dt>
+                <div className="flex items-center justify-between text-muted-foreground">
+                  <dt className="text-muted-foreground">Name</dt>
                   <dd className="capitalize">
                     {stripCalOAuthClientIdFromText(selectedElement?.attendees[0]?.name ?? "")}
                   </dd>
                 </div>
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between text-muted-foreground">
                   <dt className="text-muted-foreground">Email</dt>
                   <dd>
                     <a href="mailto:">
                       {stripCalOAuthClientIdFromEmail(selectedElement?.attendees[0]?.email ?? "")}
                     </a>
-                  </dd>
-                </div>
-                <div className="flex items-center justify-between">
-                  <dt className="text-muted-foreground">Language</dt>
-                  <dd>
-                    {selectedElement?.attendees[0]?.locale
-                      ? new Intl.DisplayNames([navigator.language], { type: "language" }).of(
-                          selectedElement?.attendees[0]?.locale ?? "English"
-                        )
-                      : ""}{" "}
-                    {selectedElement?.attendees[0]?.locale
-                      ? `(${selectedElement?.attendees[0]?.locale})`
-                      : ""}
                   </dd>
                 </div>
               </dl>

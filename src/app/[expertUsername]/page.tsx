@@ -98,7 +98,7 @@ export default async function ExpertDetails({ params }: { params: { expertUserna
                 <TableHeader>
                   <TableRow>
                     <TableHead>Name</TableHead>
-                    <TableHead className="hidden md:table-cell">Description</TableHead>
+                  
                     <TableHead>Duration (min)</TableHead>
                     <TableHead>
                       <span className="sr-only">Availability</span>
@@ -111,14 +111,9 @@ export default async function ExpertDetails({ params }: { params: { expertUserna
                       <TableCell>
                         <Link href={`/${expert.username}/${eventType.slug}`}>
                           <div className="font-medium capitalize">{eventType.title}</div>
-                          <div className="text-sm text-muted-foreground">/{eventType.slug}</div>
                         </Link>
                       </TableCell>
-                      <TableCell>
-                        <div className="hidden text-sm text-muted-foreground md:inline">
-                          {eventType.description}
-                        </div>
-                      </TableCell>
+                      
                       <TableCell>{eventType.length}</TableCell>
                       <TableCell>
                         <Link href={`/${expert.username}/${eventType.slug}`}>
@@ -149,16 +144,15 @@ export default async function ExpertDetails({ params }: { params: { expertUserna
         <Card className="sm:col-span-2">
           <CardHeader>
             <CardTitle>Cuts</CardTitle>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 pt-5">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-5 justify-items-center">
               {imageUrls.map((imageUrl, index) => (
-                <img
-                  key={index}
-                  alt={`Haircut ${index + 1}`}
-                  className="aspect-square rounded-md object-cover"
-                  src={imageUrl}
-                  height={128}
-                  width={128}
-                />
+                <div key={index} className="flex justify-center items-center">
+                  <img
+                    alt={`Haircut ${index + 1}`}
+                    className="rounded-md object-cover h-[350px] w-[350px]"
+                    src={imageUrl}
+                  />
+                </div>
               ))}
             </div>
           </CardHeader>

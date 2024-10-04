@@ -53,15 +53,15 @@ export default function SupabaseHaircutDropzone({ userId }: { userId: string }) 
 
   return (
     <div className="mx-auto grid w-full gap-4">
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-3 gap-2">
         {haircuts.map((haircut, index) => (
           <Image
             key={index}
             alt={`Haircut ${index + 1}`}
             className="aspect-square rounded-md object-cover"
             src={haircut}
-            height="100"
-            width="100"
+            height="200"
+            width="200"
           />
         ))}
       </div>
