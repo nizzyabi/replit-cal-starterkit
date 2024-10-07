@@ -1,10 +1,8 @@
 "use client";
 
 import ConnectCalendarStep from "./connect-calendar-step";
-import UserFilters from "./user-filters-step";
 import UserDetailsStep from "./user-details-step";
 import { Step, Stepper, type StepItem } from "@/components/ui/stepper";
-import { type FilterOption } from "@prisma/client";
 
 const steps = [
   { id: "connect-calendar", label: "Step 1" },
@@ -13,10 +11,8 @@ const steps = [
 
 const GettingStarted = ({
   userId,
-  filterOptions,
 }: {
-  userId: string;
-  filterOptions: Array<FilterOption>;
+  userId: string; 
 }) => {
   return (
     <main className="flex-1 bg-muted/40">

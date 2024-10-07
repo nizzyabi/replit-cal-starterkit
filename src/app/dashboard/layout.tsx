@@ -1,3 +1,4 @@
+import { UserAvatar } from "./user-avatar";
 import { ButtonSubmit } from "@/app/_components/submit-button";
 import { Logo } from "@/app/_components/universal/logo";
 import { SignedIn, signOut } from "@/auth";
@@ -11,7 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { PanelLeft, User } from "lucide-react";
+import { Bolt, Home, PanelLeft, Settings, User } from "lucide-react";
 import Link from "next/link";
 import { type ReactNode } from "react";
 
@@ -51,24 +52,34 @@ export default async function Layout({
                   {dashboardNavigationMobile}
                 </SheetContent>
               </Sheet>
-              {breadcrumbs}
+            
               <div className="relative ml-auto flex-1 md:grow-0">
                 <div className="flex flex-row items-center justify-end gap-4">
                   <div className="flex flex-row items-center gap-2">
-                    <span className="hidden text-sm text-muted-foreground [width:max-content] md:block">
-                      Logged in as <b>{user?.username}</b>
-                    </span>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button variant="secondary" size="icon" className="overflow-hidden rounded-full">
-                          <User className="" />
+                          {user?.id ? <UserAvatar userId={user.id} /> : <User className="h-5 w-5" />}
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
                         <DropdownMenuItem>
-                          <Link href="/dashboard/settings">Settings</Link>
+                          <Link href="/" className="flex items-center justify-center gap-1">
+                            <Home className="size-4" />
+                            Home
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <Link href="/dashboard" className="flex items-center justify-center gap-1">
+                            <Bolt className="size-4" />
+                            Dashboard
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <Link href="/dashboard/settings" className="flex items-center justify-center gap-1">
+                            <Settings className="size-4" />
+                            Settings
+                          </Link>
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuLabel>

@@ -1,13 +1,13 @@
 import { cal } from "@/cal/api";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { env } from "@/env";
+import { createClient } from "@supabase/supabase-js";
 import { ArrowRight } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { db } from "prisma/client";
-import { createClient } from "@supabase/supabase-js";
-import { env } from "@/env";
 
 export const dynamic = "force-dynamic";
 export default async function ExpertDetails({ params }: { params: { expertUsername: string } }) {
@@ -55,36 +55,20 @@ export default async function ExpertDetails({ params }: { params: { expertUserna
   const supabase = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
 
   // Fetch haircut image URLs
-  const { data: haircutImages, error } = await supabase.storage
-    .from("haircuts")
-    .list(`${expert.id}/`);
+  const { data: haircutImages, error } = await supabase.storage.from("haircuts").list(`${expert.id}/`);
 
   let imageUrls: string[] = [];
 
   if (error) {
     console.error("Error fetching haircut images:", error);
   } else if (haircutImages) {
-    imageUrls = haircutImages.map(file => 
-      supabase.storage.from("haircuts").getPublicUrl(`${expert.id}/${file.name}`).data.publicUrl
+    imageUrls = haircutImages.map(
+      (file) => supabase.storage.from("haircuts").getPublicUrl(`${expert.id}/${file.name}`).data.publicUrl
     );
   }
 
   return (
     <div className="mb-4 flex flex-1 flex-col items-center gap-4 overflow-auto">
-      {/* <header className="flex w-full flex-col justify-between gap-4 rounded-md bg-muted/50 px-8 py-4  sm:px-10 lg:flex-row lg:px-12 2xl:px-36">
-        <div className="flex items-center gap-x-6">
-          <img
-            alt="Expert image"
-            className="aspect-square rounded-md object-cover"
-            src={expert.image}
-            height="64"
-            width="64"
-          />
-          <div>
-            <h1 className="text-2xl font-semibold capitalize leading-none tracking-tight">{expert.name}</h1>
-          </div>
-        </div>
-      </header> */}
       <div className="mx-auto mt-4 grid w-full gap-2 px-8 sm:px-10 lg:px-12 2xl:px-36">
         {eventTypes.status === "error" ? (
           <div>User Events not found</div>
@@ -98,7 +82,7 @@ export default async function ExpertDetails({ params }: { params: { expertUserna
                 <TableHeader>
                   <TableRow>
                     <TableHead>Name</TableHead>
-                  
+
                     <TableHead>Duration (min)</TableHead>
                     <TableHead>
                       <span className="sr-only">Availability</span>
@@ -113,7 +97,7 @@ export default async function ExpertDetails({ params }: { params: { expertUserna
                           <div className="font-medium capitalize">{eventType.title}</div>
                         </Link>
                       </TableCell>
-                      
+
                       <TableCell>{eventType.length}</TableCell>
                       <TableCell>
                         <Link href={`/${expert.username}/${eventType.slug}`}>
@@ -144,16 +128,22 @@ export default async function ExpertDetails({ params }: { params: { expertUserna
         <Card className="sm:col-span-2">
           <CardHeader>
             <CardTitle>Cuts</CardTitle>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-5 justify-items-center">
-              {imageUrls.map((imageUrl, index) => (
-                <div key={index} className="flex justify-center items-center">
-                  <img
-                    alt={`Haircut ${index + 1}`}
-                    className="rounded-md object-cover h-[350px] w-[350px]"
-                    src={imageUrl}
-                  />
-                </div>
-              ))}
+            <div className="grid grid-cols-1 justify-items-center gap-4 pt-5 md:grid-cols-3">
+              {imageUrls.length === 0
+                ? // Show skeletons if no images are loaded yet
+                  Array.from({ length: 3 }).map((_, index) => (
+                    <Skeleton key={index} className="h-[350px] w-[350px] rounded-md" />
+                  ))
+                : // Show actual images once they're available
+                  imageUrls.map((imageUrl, index) => (
+                    <div key={index} className="flex items-center justify-center">
+                      <img
+                        alt={`Haircut ${index + 1}`}
+                        className="h-[350px] w-[350px] rounded-md object-cover shadow-sm"
+                        src={imageUrl}
+                      />
+                    </div>
+                  ))}
             </div>
           </CardHeader>
         </Card>

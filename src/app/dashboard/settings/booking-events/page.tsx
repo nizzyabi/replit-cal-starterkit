@@ -70,27 +70,11 @@ export default async function DashboardSettingsBookingEvents() {
     <Fragment>
       <div className="flex items-center">
         <div className="mr-auto flex items-center gap-2">
-          {/* TODO: add filter logic via url params */}
-          {/* <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm" className="h-8 gap-1">
-                <ListFilter className="h-3.5 w-3.5" />
-                <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Filter</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Filter by</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuCheckboxItem checked>Active</DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem>Draft</DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem>Archived</DropdownMenuCheckboxItem>
-            </DropdownMenuContent>
-          </DropdownMenu> */}
           <Dialog>
             <DialogTrigger asChild>
               <Button size="sm" className="h-8 gap-1">
                 <PlusCircle className="size-3.5" />
-                <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Add Event Type</span>
+                <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Add Haircut Session</span>
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
@@ -102,15 +86,7 @@ export default async function DashboardSettingsBookingEvents() {
                   <div className="grid grid-cols-4 items-center gap-4">
                     {(
                       [
-                        {
-                          name: "length",
-                          label: "Duration",
-                          type: "number",
-                          min: "15",
-                          step: "15",
-                          max: "300",
-                          required: true,
-                        },
+                        // Remove the 'length' field from here
                         {
                           name: "slug",
                           label: "Booking URL",
@@ -125,7 +101,6 @@ export default async function DashboardSettingsBookingEvents() {
                           maxlength: "30",
                           required: true,
                         },
-                        
                       ] as const
                     ).map(({ name, label, ...inputAttributes }) => (
                       <Fragment key={name}>
@@ -135,6 +110,8 @@ export default async function DashboardSettingsBookingEvents() {
                         <Input id={name} name={name} {...inputAttributes} className="col-span-3" />
                       </Fragment>
                     ))}
+                    {/* Add a hidden input for the fixed duration */}
+                    <input type="hidden" name="length" value="60" />
                   </div>
                 </div>
                 <DialogFooter className="sm:justify-content justify-center">
@@ -147,7 +124,7 @@ export default async function DashboardSettingsBookingEvents() {
       </div>
       <Card>
         <CardHeader>
-          <CardTitle>Event Types</CardTitle>
+          <CardTitle>Event Name</CardTitle>
           <CardDescription>Manage your event type and view their sales performance.</CardDescription>
         </CardHeader>
         <CardContent>
@@ -155,9 +132,7 @@ export default async function DashboardSettingsBookingEvents() {
             <TableHeader>
               <TableRow>
                 <TableHead>Booking Name</TableHead>
-                
-                
-                <TableHead className="hidden md:table-cell">Duration (min)</TableHead>
+
                 <TableHead>
                   <span className="sr-only">Actions</span>
                 </TableHead>
@@ -169,9 +144,7 @@ export default async function DashboardSettingsBookingEvents() {
                   <TableCell>
                     <div className="font-medium capitalize">{eventType.title}</div>
                   </TableCell>
-                  
-                  
-                  <TableCell className="hidden md:table-cell">{eventType.length}</TableCell>
+
                   <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>

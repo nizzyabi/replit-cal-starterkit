@@ -22,7 +22,7 @@ export default function ExpertEditForm(props: InputProps | TextareaProps) {
           disabled={isPendingAction}
         />
       ) : (
-        <Input {...(props as InputProps)} disabled={isPendingAction} />
+        <Input {...(props as InputProps)} disabled={isPendingAction} className="max-w-72"/>
       )}
       {/* display action states (pending, idle, success & error) */}
       {isPendingAction ? (
@@ -32,9 +32,8 @@ export default function ExpertEditForm(props: InputProps | TextareaProps) {
       ) : "error" in state && state.error ? (
         <CardDescription className="text-red-900">{state.error}</CardDescription>
       ) : (
-        <CardDescription>
-          Provide a new {props.name} and hit save to reflect the changes on your public page.
-        </CardDescription>
+        <>
+        </>
       )}
       <ButtonSubmit size="sm" variant="default">
         Save

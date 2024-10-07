@@ -57,7 +57,7 @@ model User {
   createdAt             DateTime?             @default(now())
   status                UserStatus            @default(PENDING)
   accounts              Account[]
-  selectedFilterOptions FilterOptionsOnUser[]
+
   sessions              Session[]
   calAccount            CalAccount?           @relation(fields: [calAccountId], references: [id], onDelete: Cascade)
 
@@ -86,34 +86,6 @@ model VerificationToken {
   createdAt  DateTime? @default(now())
 
   @@unique([identifier, token])
-  @@schema("prisma")
-}
-
-model FilterOption {
-  fieldId               String                @id @unique
-  fieldValue            String
-  fieldLabel            String
-  createdAt             DateTime?             @default(now())
-  filterCategoryFieldId String
-  filterCategoryValue   String
-  filterCategoryLabel   String
-  selectedByUsers       FilterOptionsOnUser[]
-
-  @@unique([fieldId, filterCategoryFieldId])
-  @@index([fieldId, filterCategoryFieldId])
-  @@schema("prisma")
-}
-
-model FilterOptionsOnUser {
-  userId                String
-  filterOptionFieldId   String
-  filterCategoryFieldId String
-  createdAt             DateTime?    @default(now())
-  filterOption          FilterOption @relation(fields: [filterOptionFieldId, filterCategoryFieldId], references: [fieldId, filterCategoryFieldId])
-  user                  User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([userId, filterOptionFieldId, filterCategoryFieldId])
-  @@index([userId, filterOptionFieldId, filterCategoryFieldId])
   @@schema("prisma")
 }
 

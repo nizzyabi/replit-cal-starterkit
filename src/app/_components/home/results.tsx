@@ -1,25 +1,16 @@
 "use client";
 
-import { SearchBar } from "../search-bar";
-import SidebarItem from "./sidebar-item";
-import { filterOptions } from "@/app/_hardcoded";
-import { filterSearchParamSchema } from "@/app/_searchParams";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { type FilterOption, type User } from "@prisma/client";
-import { motion } from "framer-motion";
-import { ListFilter, Loader } from "lucide-react";
+import { Loader, Scissors } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useQueryState, parseAsString, parseAsJson } from "nuqs";
+import { useQueryState, parseAsString } from "nuqs";
 import { type db } from "prisma/client";
-import { Fragment, type ReactEventHandler, useState, type SyntheticEvent } from "react";
+import { Fragment, useState } from "react";
 import React, { Suspense } from "react";
 import { Balancer } from "react-wrap-balancer";
-import { prop, uniqueBy } from "remeda";
 
 export default function ResultsCard({
   slug,
@@ -38,53 +29,62 @@ export default function ResultsCard({
 
   return (
     <Link href={"/" + slug} className="col-span-1 flex">
-      <Card className="mx-auto overflow-hidden transition-transform duration-300 ease-in-out hover:scale-[1.05]">
-        <div
-          className={cn(
-            "h-[365px] w-[480px] rounded-md transition-all duration-300",
-            error && "bg-muted",
-            isLoading && "bg-muted"
-          )}>
-          <Image
-            src={`/avatars/${userId}?width=380&height=265`}
-            alt={title}
-            className="h-full w-full rounded-t-md object-cover transition-opacity duration-300 ease-in-out"
-            height={265}
-            width={380}
-            onError={(e) => {
-              setError(e.error);
-              setIsLoading(false);
-            }}
-            onLoad={() => setIsLoading(false)}
-          />
+      <Card className="mx-auto w-full max-w-sm overflow-hidden transition-all duration-300 ease-in-out">
+        <div className="relative">
+          <div
+            className={cn(
+              "h-[280px] w-full rounded-t-md transition-all duration-300",
+              error && "bg-muted",
+              isLoading && "bg-muted"
+            )}>
+            <Image
+              src={`/avatars/${userId}?width=320&height=240`}
+              alt={title}
+              className="h-full w-full rounded-t-md object-cover transition-opacity duration-300 ease-in-out"
+              height={240}
+              width={320}
+              onError={(e) => {
+                setError(e.error);
+                setIsLoading(false);
+              }}
+              onLoad={() => setIsLoading(false)}
+            />
+          </div>
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+            <h3 className="text-xl font-semibold text-white">
+              {queryIndexTitle !== -1 && query ? (
+                <>
+                  {title.substring(0, queryIndexTitle)}
+                  <span className="bg-yellow-300 text-black">
+                    {title.substring(queryIndexTitle, queryIndexTitle + query.length)}
+                  </span>
+                  {title.substring(queryIndexTitle + query.length)}
+                </>
+              ) : (
+                title
+              )}
+            </h3>
+          </div>
         </div>
-        <CardHeader>
-          <CardTitle className="text-xl">
-            {queryIndexTitle != undefined && query ? (
-              <>
-                {title.substring(0, queryIndexTitle)}
-                <span className="bg-yellow-300">
-                  {title.substring(queryIndexTitle, queryIndexTitle + query.length)}
-                </span>
-                {title.substring(queryIndexTitle + query.length)}
-              </>
-            ) : (
-              title
-            )}
-          </CardTitle>
+        <CardHeader className="p-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <Scissors className="mr-2 h-5 w-5 text-gray-500" />
+              
+            </div>
+            <Button variant="outline" size="sm">
+              Book Now
+            </Button>
+          </div>
         </CardHeader>
       </Card>
     </Link>
   );
 }
-type UsersWithFilterOptions = Awaited<
-  ReturnType<
-    typeof db.user.findMany<{
-      include: { selectedFilterOptions: { include: { filterOption: true } } };
-    }>
-  >
->;
-export function Results(props: { experts: UsersWithFilterOptions; signedOut: JSX.Element }) {
+
+type UsersWithoutFilterOptions = Awaited<ReturnType<typeof db.user.findMany>>;
+
+export function Results(props: { experts: UsersWithoutFilterOptions; signedOut: JSX.Element }) {
   const [query] = useQueryState("q", parseAsString);
 
   const experts = props.experts.filter((expert) => {
@@ -118,7 +118,6 @@ export function Results(props: { experts: UsersWithFilterOptions; signedOut: JSX
             }>
             <div className="block sm:flex">
               <main className="w-full p-4 pt-0">
-                <h1 className="my-7 text-center text-5xl font-bold">Our Barbers</h1>
                 <div className="grid grid-cols-1 gap-5 space-x-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
                   {!query && props.signedOut}
                   {experts.length &&

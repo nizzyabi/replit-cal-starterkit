@@ -83,7 +83,7 @@ export const BookingsTable = (props: {
                     <TableHeader>
                       <TableRow>
                         <TableHead>Booker</TableHead>
-                        <TableHead className="hidden sm:table-cell">Event Type</TableHead>
+                        <TableHead className="hidden sm:table-cell">Event Name</TableHead>
                         <TableHead className="hidden sm:table-cell">Status</TableHead>
                         <TableHead className="hidden md:table-cell">Date</TableHead>
                         <TableHead className="text-right">Time</TableHead>

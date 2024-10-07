@@ -14,6 +14,16 @@ export default async function DashboardSettingsProfile() {
   }
   return (
     <div className="grid gap-6">
+      <div className="grid md:grid-cols-2 gap-4">
+      <Card x-chunk="dashboard-04-chunk-1">
+        <CardHeader>
+          <CardTitle>Name</CardTitle>
+          <CardDescription>Used on your public profile, once it is approved.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ExpertEditForm id="name" name="name" placeholder={expert.name ?? "Your name"} />
+        </CardContent>
+      </Card>
       <Card x-chunk="dashboard-04-chunk-1">
         <CardHeader>
           <CardTitle>Image</CardTitle>
@@ -31,29 +41,11 @@ export default async function DashboardSettingsProfile() {
           </CardDescription>
         </CardFooter>
       </Card>
-      <Card x-chunk="dashboard-04-chunk-1">
-        <CardHeader>
-          <CardTitle>Name</CardTitle>
-          <CardDescription>Used on your public profile, once it is approved.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ExpertEditForm id="name" name="name" placeholder={expert.name ?? "Your name"} />
-        </CardContent>
-      </Card>
-      <Card x-chunk="dashboard-04-chunk-2">
-        <CardHeader>
-          <CardTitle>Bio</CardTitle>
-          <CardDescription>
-            A couple of sentences about yourself. This will be displayed on your public profile.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ExpertEditForm id="bio" name="bio" placeholder={expert.bio ?? "Your Bio"} />
-        </CardContent>
-      </Card>
+      </div>
       <Card x-chunk="dashboard-04-chunk-1">
         <CardHeader>
           <CardTitle>Hair cuts</CardTitle>
+          <CardDescription>Used to show off your haircuts on previous clients.</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-4">
