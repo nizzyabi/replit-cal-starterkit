@@ -8,8 +8,7 @@ import { type FilterOption } from "@prisma/client";
 
 const steps = [
   { id: "connect-calendar", label: "Step 1" },
-  { id: "filters", label: "Step 2" },
-  { id: "avatar-and-bio", label: "Step 3" },
+  { id: "avatar-and-bio", label: "Step 2" },
 ] satisfies StepItem[];
 
 const GettingStarted = ({
@@ -22,7 +21,7 @@ const GettingStarted = ({
   return (
     <main className="flex-1 bg-muted/40">
       <div className="flex items-center justify-center p-10">
-        <div className="w-3/4">
+        <div className="w-1/2">
           <Stepper initialStep={0} steps={steps}>
             {steps.map(({ id, label }, index) => {
               return (
@@ -32,8 +31,7 @@ const GettingStarted = ({
                       <ConnectCalendarStep />
                     </div>
                   )}
-                  {index === 1 && <UserFilters filterOptions={filterOptions} />}
-                  {index === 2 && <UserDetailsStep userId={userId} />}
+                  {index === 1 && <UserDetailsStep userId={userId} />}
                 </Step>
               );
             })}

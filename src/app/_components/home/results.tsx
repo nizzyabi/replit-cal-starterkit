@@ -72,19 +72,6 @@ export default function ResultsCard({
               title
             )}
           </CardTitle>
-          {/* <CardDescription className="transition-colors duration-300 ease-in-out hover:text-muted-foreground">
-            {queryIndexDescription != undefined && query ? (
-              <>
-                {description.substring(0, queryIndexDescription)}
-                <span className="bg-yellow-300">
-                  {description.substring(queryIndexDescription, queryIndexDescription + query.length)}
-                </span>
-                {description.substring(queryIndexDescription + query.length)}
-              </>
-            ) : (
-              description
-            )}
-          </CardDescription> */}
         </CardHeader>
       </Card>
     </Link>
@@ -100,7 +87,6 @@ type UsersWithFilterOptions = Awaited<
 export function Results(props: { experts: UsersWithFilterOptions; signedOut: JSX.Element }) {
   const [query] = useQueryState("q", parseAsString);
 
-  // this is the query string search:
   const experts = props.experts.filter((expert) => {
     if (!query) return true;
     return (
@@ -120,7 +106,7 @@ export function Results(props: { experts: UsersWithFilterOptions; signedOut: JSX
           </h1>
         </div>
       </div>
-      <div className="flex-1 mt-10">
+      <div className="mt-10 flex-1">
         <div className="sm:my-10">
           <Suspense
             fallback={
@@ -132,6 +118,7 @@ export function Results(props: { experts: UsersWithFilterOptions; signedOut: JSX
             }>
             <div className="block sm:flex">
               <main className="w-full p-4 pt-0">
+                <h1 className="my-7 text-center text-5xl font-bold">Our Barbers</h1>
                 <div className="grid grid-cols-1 gap-5 space-x-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
                   {!query && props.signedOut}
                   {experts.length &&

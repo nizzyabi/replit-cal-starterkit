@@ -13,7 +13,7 @@ const ConnectCalendarStep = () => {
       <Card className="mx-auto mt-10 w-full max-w-sm">
         <CardHeader>
           <CardTitle className="text-2xl">Getting Started</CardTitle>
-          <CardDescription>Connect your calendar to get started.</CardDescription>
+          <CardDescription>Connect your calendar to get started. (optional)</CardDescription>
         </CardHeader>
         <CardFooter className="[&>div]:w-full">
           <Suspense
@@ -24,7 +24,7 @@ const ConnectCalendarStep = () => {
                 </div>
               </div>
             }>
-            <GcalConnect className="flex w-full items-center justify-center [&>svg]:mr-2" />
+            <GcalConnect className="flex w-full items-center justify-center [&>svg]:mr-2 bg-orange-400 hover:bg-orange-400/80" />
           </Suspense>
         </CardFooter>
       </Card>

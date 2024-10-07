@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useFormState } from "react-dom";
 import { useState } from "react";
+import SupabaseHaircutDropzone from "../settings/_components/supabase-haircut-dropzone";
 
 type UserDetailsFormState = { error: null | string } | { success: null | string };
 
@@ -48,10 +49,8 @@ const UserDetailsStep = ({ userId }: { userId: string }) => {
       </div>
       <div className="mt-4">
         <Label htmlFor="haircutImages">Hair cuts</Label>
-        <SupabaseReactDropzone 
+        <SupabaseHaircutDropzone 
           userId={userId ?? "clxj4quka0000gebuthdxi1cp"} 
-          multiple={true}
-          onUpload={handleHaircutImagesUploaded}
         />
         {uploadedHaircutImages.length > 0 && (
           <div className="mt-2">
