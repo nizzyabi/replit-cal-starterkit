@@ -70,7 +70,7 @@ export default async function ExpertDetails({ params }: { params: { expertUserna
 
   return (
     <div className="mb-4 mt-8 flex flex-1 flex-col items-center gap-4 overflow-auto">
-      <div className="w-full max-w-6xl px-8 sm:px-10 lg:px-12">
+      <div className="w-full max-w-8xl px-8 sm:px-10 lg:px-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* First Card: Book with expert */}
           <div>
@@ -152,7 +152,7 @@ export default async function ExpertDetails({ params }: { params: { expertUserna
       </div>
 
       {/* Third Card: Haircuts */}
-      <div className="w-full max-w-6xl px-8 sm:px-10 lg:px-12">
+      <div className="w-full max-w-8xl px-8 sm:px-10 lg:px-12">
         <Card className="w-full">
           <CardHeader>
             <CardTitle>Haircuts done by {expert.name}</CardTitle>
