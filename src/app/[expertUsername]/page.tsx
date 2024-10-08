@@ -6,6 +6,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { env } from "@/env";
 import { createClient } from "@supabase/supabase-js";
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { db } from "prisma/client";
 
@@ -68,66 +69,96 @@ export default async function ExpertDetails({ params }: { params: { expertUserna
   }
 
   return (
-    <div className="mb-4 flex flex-1 flex-col items-center gap-4 overflow-auto">
-      <div className="mx-auto mt-4 grid w-full gap-2 px-8 sm:px-10 lg:px-12 2xl:px-36">
-        {eventTypes.status === "error" ? (
-          <div>User Events not found</div>
-        ) : (
-          <Card>
-            <CardHeader>
-              <CardTitle>Book with {expert.name}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Name</TableHead>
+    <div className="mb-4 mt-8 flex flex-1 flex-col items-center gap-4 overflow-auto">
+      <div className="w-full max-w-6xl px-8 sm:px-10 lg:px-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* First Card: Book with expert */}
+          <div>
+            {eventTypes.status === "error" ? (
+              <div>User Events not found</div>
+            ) : (
+              <Card className="w-full h-full">
+                <CardHeader>
+                  <CardTitle>Book with {expert.name}</CardTitle>
+                  <CardDescription>See available services and book an appointment below.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Name</TableHead>
+                        <TableHead>
+                          <span className="sr-only">Availability</span>
+                        </TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {eventTypes.data.map((eventType) => (
+                        <TableRow key={eventType.id}>
+                          <TableCell>
+                            <Link href={`/${expert.username}/${eventType.slug}`}>
+                              <div className="font-medium capitalize">{eventType.title}</div>
+                            </Link>
+                          </TableCell>
+                          <TableCell>
+                            <Link href={`/${expert.username}/${eventType.slug}`}>
+                              <Button variant="ghost" size="icon">
+                                <ArrowRight className="size-5 hover:size-6" />
+                              </Button>
+                            </Link>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+                <CardFooter>
+                  <div className="text-xs text-muted-foreground">
+                    Showing{" "}
+                    <strong>
+                      {eventTypes.data.length > 0 ? 1 : 0}-
+                      {eventTypes.data.length > 10 ? 10 : eventTypes.data.length}
+                    </strong>{" "}
+                    of <strong>{eventTypes.data.length}</strong> event types
+                  </div>
+                </CardFooter>
+              </Card>
+            )}
+          </div>
 
-                    <TableHead>Duration (min)</TableHead>
-                    <TableHead>
-                      <span className="sr-only">Availability</span>
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {eventTypes.data.map((eventType) => (
-                    <TableRow key={eventType.id}>
-                      <TableCell>
-                        <Link href={`/${expert.username}/${eventType.slug}`}>
-                          <div className="font-medium capitalize">{eventType.title}</div>
-                        </Link>
-                      </TableCell>
-
-                      <TableCell>{eventType.length}</TableCell>
-                      <TableCell>
-                        <Link href={`/${expert.username}/${eventType.slug}`}>
-                          <Button variant="ghost" size="icon">
-                            <ArrowRight className="size-5 hover:size-6" />
-                          </Button>
-                        </Link>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-            <CardFooter>
-              <div className="text-xs text-muted-foreground">
-                Showing{" "}
-                <strong>
-                  {eventTypes.data.length > 0 ? 1 : 0}-
-                  {eventTypes.data.length > 10 ? 10 : eventTypes.data.length}
-                </strong>{" "}
-                of <strong>{eventTypes.data.length}</strong> event types
-              </div>
-            </CardFooter>
-          </Card>
-        )}
+          {/* Second Card: About Expert */}
+          <div>
+            {eventTypes.status === "error" ? (
+              <div>User Events not found</div>
+            ) : (
+              <Card className="w-full h-full">
+                <CardHeader>
+                  <CardTitle>About {expert.name}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <Image
+                    alt="Expert image"
+                    className="w-full h-full rounded-lg object-fi;;"
+                    src={`avatars/${expert.id}`}
+                    height={800}
+                    width={800}
+                  />
+                </CardContent>
+                <CardFooter>{expert.bio}</CardFooter>
+              </Card>
+            )}
+          </div>
+        </div>
       </div>
-      <div className="mx-auto mt-4 grid w-full gap-2 px-8 sm:px-10 lg:px-12 2xl:px-36">
-        <Card className="sm:col-span-2">
+
+      {/* Third Card: Haircuts */}
+      <div className="w-full max-w-6xl px-8 sm:px-10 lg:px-12">
+        <Card className="w-full">
           <CardHeader>
-            <CardTitle>Cuts</CardTitle>
+            <CardTitle>Haircuts done by {expert.name}</CardTitle>
+            <CardDescription>See some of my haircuts done on previous clients.</CardDescription>
+          </CardHeader>
+          <CardContent>
             <div className="grid grid-cols-1 justify-items-center gap-4 pt-5 md:grid-cols-3">
               {imageUrls.length === 0
                 ? // Show skeletons if no images are loaded yet
@@ -145,7 +176,7 @@ export default async function ExpertDetails({ params }: { params: { expertUserna
                     </div>
                   ))}
             </div>
-          </CardHeader>
+          </CardContent>
         </Card>
       </div>
     </div>
