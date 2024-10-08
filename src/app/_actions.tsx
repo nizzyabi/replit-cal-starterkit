@@ -79,8 +79,6 @@ export async function addUserFilters(_prevState: { error?: string | null }, form
           };
         });
       })
-      // to filter out any null values:
-      .filter(Boolean) as Prisma.FilterOptionsOnUserCreateManyInput[][];
 
     const data = selectedFilterOptions.flat();
 
@@ -88,17 +86,7 @@ export async function addUserFilters(_prevState: { error?: string | null }, form
 
     for (const filter of data) {
       createOrUpdateFilterPromises.push(
-        db.filterOptionsOnUser.upsert({
-          where: {
-            userId_filterOptionFieldId_filterCategoryFieldId: {
-              userId: filter.userId,
-              filterOptionFieldId: filter.filterOptionFieldId,
-              filterCategoryFieldId: filter.filterCategoryFieldId,
-            },
-          },
-          update: filter,
-          create: filter,
-        })
+        
       );
     }
 
