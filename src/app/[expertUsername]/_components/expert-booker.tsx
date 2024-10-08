@@ -51,16 +51,6 @@ export const ExpertBooker = (
       }}
       rescheduleUid={rescheduleUid}
       {...rest}
-      customClassNames={{
-        bookerContainer: "bg-[#EFEDEB] font-serif !border-primary border w-full space-x-12 rounded-xl",
-        datePickerCustomClassNames: {
-          datePickerDatesActive: "!bg-[#8F999766] !rounded-none",
-        },
-        availableTimeSlotsCustomClassNames: {
-          availableTimeSlotsHeaderContainer: "!bg-[#EFEDEB]",
-          availableTimes: "!bg-[#8F999766]",
-        },
-      }}
     />
   );
 };

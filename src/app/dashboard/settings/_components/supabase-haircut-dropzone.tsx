@@ -58,7 +58,7 @@ export default function SupabaseHaircutDropzone({ userId }: { userId: string }) 
           <Image
             key={index}
             alt={`Haircut ${index + 1}`}
-            className="aspect-square rounded-md object-cover border border-foreground/10 shadow-sm"
+            className="aspect-square rounded-md object-cover shadow-sm"
             src={haircut}
             height="200"
             width="200"

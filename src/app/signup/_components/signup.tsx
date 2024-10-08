@@ -33,7 +33,6 @@ export const SignupForm = () => {
 
   return (
     <form action={dispatch}>
-      <Link href="/dashboard">Dashboard</Link>
       <Card className="mx-auto max-w-sm">
         <CardHeader>
           <CardTitle className="text-xl">Sign Up</CardTitle>
@@ -98,6 +97,11 @@ export const SignupForm = () => {
           </div>
         </CardContent>
       </Card>
+      <div className="flex justify-center">
+        <Button className="mt-6">
+          <Link href="/dashboard">Go to Dashboard</Link>
+        </Button>
+      </div>
     </form>
   );
 };
