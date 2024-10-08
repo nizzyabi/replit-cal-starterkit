@@ -43,10 +43,6 @@ export default function ResultsCard({
               className="h-full w-full rounded-t-md object-cover transition-opacity duration-300 ease-in-out"
               height={240}
               width={320}
-              onError={(e) => {
-                setError(e.error);
-                setIsLoading(false);
-              }}
               onLoad={() => setIsLoading(false)}
             />
           </div>
