@@ -1,27 +1,30 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { Loader, Scissors } from "lucide-react";
+import { Loader, Star, Clock, DollarSign } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useQueryState, parseAsString } from "nuqs";
 import { type db } from "prisma/client";
 import { Fragment, useState } from "react";
 import React, { Suspense } from "react";
-import { Balancer } from "react-wrap-balancer";
 
 export default function ResultsCard({
   slug,
   userId,
   title,
   query,
+  rating,
+  priceRange,
 }: {
   slug: string;
   userId?: string;
   title: string;
   query?: string;
+  rating: number;
+  priceRange: string;
 }) {
   const queryIndexTitle = title.toLowerCase().indexOf(query?.toLowerCase() ?? "");
   const [error, setError] = useState<Error | null>(null);
@@ -29,7 +32,7 @@ export default function ResultsCard({
 
   return (
     <Link href={"/" + slug} className="col-span-1 flex">
-      <Card className="mx-auto w-full max-w-sm overflow-hidden transition-all duration-300 ease-in-out">
+      <Card className="mx-auto w-full max-w-sm overflow-hidden transition-all duration-300 ease-in-out hover:shadow-lg">
         <div className="relative">
           <div
             className={cn(
@@ -63,14 +66,22 @@ export default function ResultsCard({
           </div>
         </div>
         <CardHeader className="p-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <Scissors className="mr-2 h-5 w-5 text-gray-500" />
-              
+          <div className="flex flex-col space-y-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <Star className="mr-1 h-5 w-5 text-yellow-400" fill="#FACC14" />
+                <span className="font-semibold">{rating.toFixed(1)}</span>
+              </div>
             </div>
-            <Button variant="outline" size="sm">
-              Book Now
-            </Button>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center text-gray-600">
+                <DollarSign className="mr-1 h-4 w-4" />
+                <span className="text-sm">{priceRange}</span>
+              </div>
+              <Button variant="outline" size="sm">
+                Book Now
+              </Button>
+            </div>
           </div>
         </CardHeader>
       </Card>
@@ -97,8 +108,8 @@ export function Results(props: { experts: UsersWithoutFilterOptions; signedOut: 
         className="flex min-h-[600px] flex-col justify-center bg-cover bg-center bg-no-repeat py-20"
         style={{ backgroundImage: "url('/barber.svg')" }}>
         <div className="container  flex flex-col items-center justify-center gap-12">
-          <h1 className="font-display text-7xl font-extrabold tracking-wide text-white shadow-xl text-center">
-          Get your dream haircut
+          <h1 className="text-center font-display text-7xl font-extrabold tracking-wide text-white shadow-xl">
+            Get your dream haircut
           </h1>
         </div>
       </div>
@@ -117,13 +128,15 @@ export function Results(props: { experts: UsersWithoutFilterOptions; signedOut: 
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-4">
                   {!query && props.signedOut}
                   {experts.length &&
-                    experts.map(({ image, username, name, bio, id }) => (
+                    experts.map(({ username, name, id }) => (
                       <ResultsCard
                         key={username}
                         slug={username ?? ""}
                         userId={id ?? ""}
                         title={name ?? "Your title"}
                         query={query ?? undefined}
+                        rating={5}
+                        priceRange="Free"
                       />
                     ))}
                 </div>

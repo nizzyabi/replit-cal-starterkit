@@ -5,7 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { env } from "@/env";
 import { createClient } from "@supabase/supabase-js";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, DollarSign } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { db } from "prisma/client";
@@ -70,14 +70,14 @@ export default async function ExpertDetails({ params }: { params: { expertUserna
 
   return (
     <div className="mb-4 mt-8 flex flex-1 flex-col items-center gap-4 overflow-auto">
-      <div className="w-full max-w-8xl px-8 sm:px-10 lg:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="max-w-8xl w-full px-8 sm:px-10 lg:px-12">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {/* First Card: Book with expert */}
           <div>
             {eventTypes.status === "error" ? (
               <div>User Events not found</div>
             ) : (
-              <Card className="w-full h-full">
+              <Card className="h-full w-full">
                 <CardHeader>
                   <CardTitle>Book with {expert.name}</CardTitle>
                   <CardDescription>See available services and book an appointment below.</CardDescription>
@@ -131,20 +131,26 @@ export default async function ExpertDetails({ params }: { params: { expertUserna
             {eventTypes.status === "error" ? (
               <div>User Events not found</div>
             ) : (
-              <Card className="w-full h-full">
+              <Card className="h-full w-full">
                 <CardHeader>
                   <CardTitle>About {expert.name}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <Image
                     alt="Expert image"
-                    className="w-full h-full rounded-lg object-fi;;"
+                    className="object-fi;; h-full w-full rounded-lg"
                     src={`avatars/${expert.id}`}
                     height={800}
                     width={800}
                   />
                 </CardContent>
-                <CardFooter>{expert.bio}</CardFooter>
+                <CardFooter className="flex justify-between text-gray-600">
+                  <p>{expert.bio}</p>
+                  <div className="flex items-center ">
+                   
+                    $20 per haircut
+                  </div>
+                </CardFooter>
               </Card>
             )}
           </div>
@@ -152,7 +158,7 @@ export default async function ExpertDetails({ params }: { params: { expertUserna
       </div>
 
       {/* Third Card: Haircuts */}
-      <div className="w-full max-w-8xl px-8 sm:px-10 lg:px-12">
+      <div className="max-w-8xl w-full px-8 sm:px-10 lg:px-12">
         <Card className="w-full">
           <CardHeader>
             <CardTitle>Haircuts done by {expert.name}</CardTitle>
