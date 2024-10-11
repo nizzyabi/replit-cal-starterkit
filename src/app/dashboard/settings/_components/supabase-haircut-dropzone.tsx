@@ -22,11 +22,15 @@ export default function SupabaseHaircutDropzone({ userId }: { userId: string }) 
       
       if (data) {
         setHaircuts(data.map(file => `haircuts/${userId}/${file.name}`));
+      } else if (error) {
+        console.error("Error fetching haircuts:", error);
       }
     };
 
-    fetchHaircuts();
-  }, [userId]);
+    fetchHaircuts().catch(error => {
+      console.error("Error in fetchHaircuts:", error);
+    });
+  }, [userId, supabaseBrowserClient]);
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
@@ -37,17 +41,23 @@ export default function SupabaseHaircutDropzone({ userId }: { userId: string }) 
     onDropAccepted: async (acceptedFiles) => {
       setStatus("loading");
 
-      for (const file of acceptedFiles) {
-        const { data, error } = await supabaseBrowserClient.storage
-          .from("haircuts")
-          .upload(`${userId}/${file.name}`, file);
+      try {
+        for (const file of acceptedFiles) {
+          const { data, error } = await supabaseBrowserClient.storage
+            .from("haircuts")
+            .upload(`${userId}/${file.name}`, file);
 
-        if (data) {
-          setHaircuts(prev => [...prev, `haircuts/${userId}/${file.name}`]);
+          if (data) {
+            setHaircuts(prev => [...prev, `haircuts/${userId}/${file.name}`]);
+          } else if (error) {
+            console.error("Error uploading file:", error);
+          }
         }
+        setStatus("success");
+      } catch (error) {
+        console.error("Error in onDropAccepted:", error);
+        setStatus("error");
       }
-
-      setStatus("success");
     },
   });
 

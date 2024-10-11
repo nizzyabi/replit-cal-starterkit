@@ -138,7 +138,7 @@ export default async function ExpertDetails({ params }: { params: { expertUserna
                 <CardContent>
                   <Image
                     alt="Expert image"
-                    className="object-fi;; h-full w-full rounded-lg"
+                    className="object-fit h-full w-full rounded-lg"
                     src={`avatars/${expert.id}`}
                     height={800}
                     width={800}
