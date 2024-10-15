@@ -51,6 +51,7 @@ model User {
   hashedPassword        String?
   haircutImages        String[]
   image                 String?
+  costPerHairCut        Int?
   calAccountId          Int?                  @unique
   calAccessToken        String?               @unique
   calRefreshToken       String?               @unique

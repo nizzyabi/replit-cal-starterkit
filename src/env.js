@@ -28,7 +28,7 @@ export const env = createEnv({
    * `NEXT_PUBLIC_`.
    */
   client: {
-    NEXT_PUBLIC_APP_URL: z.string().default("http://localhost:3000"),
+    NEXT_PUBLIC_APP_URL: z.string().default("https://17ac7a5a-c88f-4b0b-9116-7b1be8134aa4-00-l4s9rxeug08m.kirk.replit.dev/"),
     /** [@calcom] These are the server environment variables to make our atoms work:
      * - *NEXT_PUBLIC_CAL_OAUTH_CLIENT_ID*: The OAuth client ID to authenticate our SDK requests. Follow this guide to get it 👇
      * @link: https://cal.com/docs/platform/quick-start#2.-setting-up-an-oauth-client

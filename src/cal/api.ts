@@ -254,7 +254,7 @@ export const forceRefresh = async (input: { calAccountId: User["calAccountId"] }
       headers: {
         "Content-Type": "application/json",
         "x-cal-secret-key": env.CAL_SECRET,
-        origin: "http://localhost:3000",
+        origin: "https://17ac7a5a-c88f-4b0b-9116-7b1be8134aa4-00-l4s9rxeug08m.kirk.replit.dev/",
       },
     },
   ] satisfies Parameters<typeof fetch>;
@@ -502,7 +502,7 @@ export const calHeaders = {
   "x-cal-secret-key": env.CAL_SECRET,
   // "cal-api-version": "2024-05-21", 06-11 -> latest version & 07-15 is the previous
   "cal-api-version": "2024-06-11", // 06-11 -> latest version & 07-15 is the previous
-  Origin: new URL(env.NEXT_PUBLIC_REFRESH_URL).origin ?? "http://localhost:3000",
+  Origin: new URL(env.NEXT_PUBLIC_REFRESH_URL).origin ?? "https://17ac7a5a-c88f-4b0b-9116-7b1be8134aa4-00-l4s9rxeug08m.kirk.replit.dev/",
   // ⚠️ NestJS requires this header otherwise it won't consume the body
   "Content-type": "application/json",
 } as const;
