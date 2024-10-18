@@ -1,11 +1,10 @@
-import Banner from "./_components/banner";
 import UseCalAtoms from "./_components/use-cal";
 import { Providers } from "./providers";
 import { currentUser } from "@/auth";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 import "@/styles/globals.css";
-
+import Link from 'next/link'
 /**
  * [@calcom] In your root layout, make sure you import the atoms' global styles so that you get our shiny styles
  * @link https://cal.com/docs/platform/quick-start#5.3-setup-root-of-your-app
@@ -29,10 +28,10 @@ const calFont = localFont({
 
 export const metadata: Metadata = {
   title: {
-    default: "Cal.com Platform: Showcase App",
-    template: `Cal.com Platform | %s`,
+    default: "Cal Barbershop: Example App",
+    template: `Cal Barbershop | %s`,
   },
-  description: "Cal.com Platform example app: Showcase usage of the 'Cal Atoms' React Components",
+  description: "Cal.com Atoms example app: Showcase usage of the 'Cal Atoms' React Components",
   keywords: [
     "cal.com",
     "platform",
@@ -41,13 +40,15 @@ export const metadata: Metadata = {
     "scheduling software",
     "scheduling components",
     "scheduling react",
+    "scheduling nextjs",
+    "scheduling cal",
+    "cal atoms"
   ],
   authors: [
     {
-      name: "Richard Poelderl",
-      url: "https://x.com/richardpoelderl",
+      name: "Nizar Abi Zaher",
+      url: "https://x.com/nizzyabi",
     },
-    { name: "Peer Richelsen", url: "https://x.com/peerrich" },
   ],
   creator: "Cal.com",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
@@ -56,16 +57,12 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     /** [@calcom] Ensure to set the diretion (either 'ltr' or 'rtl') since the calcom/atoms use their styles */
-    <html lang="en" dir="ltr">
+    <html lang="en" dir="ltr" suppressHydrationWarning>
       <head />
       <AxiomWebVitals />
       <body className={cn("antialiased", calFont.variable, interFont.variable)}>
         <Providers defaultTheme="system" enableSystem attribute="class">
           <div className="flex min-h-screen flex-col">
-            <Banner
-              title="Build your own barbershop scheduling app"
-              ctaLink="https://go.cal.com/starter-kit"
-            />
             <UseCalAtoms
               calAccessToken={currentUser().then((dbUser) => dbUser?.calAccessToken ?? null) ?? null}>
               {children}
@@ -74,6 +71,48 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           {/* <TailwindIndicator /> */}
         </Providers>
         <Toaster />
+        <footer className="flex justify-evenly bg-black/95 py-20 text-white">
+          <div>
+            <h1 className="mb-4 text-lg font-bold">Cal&apos;s Barbershop</h1>
+            <p className="opacity-60 text-sm">All rights reserved.</p>
+          </div>
+          <div>
+            <h1 className="mb-4 text-lg font-bold">Locations</h1>
+            <Link href="/" className="space-y-2 text-sm opacity-60">
+              <p>Texas</p>
+              <p>California</p>
+              <p>New York</p>
+              <p>London</p>
+              <p>Paris</p>
+              <p>Tokyo</p>
+            </Link>
+          </div>
+          <div>
+            <h1 className="mb-4 text-lg font-bold">Events</h1>
+            <Link href="/" className="space-y-2 text-sm opacity-60">
+              <p>Bookings</p>
+              <p>Events</p>
+              <p>Barbers</p>
+            </Link>
+          </div>
+          <div>
+            <h1 className="mb-4 text-lg font-bold">Contact</h1>
+            <Link href="/" className="space-y-2 text-sm opacity-60">
+              <p>Phone</p>
+              <p>Email</p>
+              <p>Message</p>
+            </Link>
+          </div>
+          <div>
+            <h1 className="mb-4 text-lg font-bold">Socials</h1>
+            <Link href="/" className="space-y-2 text-sm opacity-60">
+              <p>Youtube</p>
+              <p>Instagram</p>
+              <p>Facebook</p>
+              <p>X</p>
+            </Link>
+          </div>
+        </footer>
       </body>
       <Analytics />
     </html>

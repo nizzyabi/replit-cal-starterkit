@@ -32,6 +32,15 @@ export default async function DashboardSettingsProfile() {
           <CardContent>
             <ExpertEditForm id="bio" name="bio" placeholder={expert.bio ?? "Your Bio"} />
           </CardContent>
+          <CardHeader>
+            <CardTitle>Cost per cut</CardTitle>
+            <CardDescription>
+              Cost per haircut. This will be displayed on your public profile.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ExpertEditForm id="costPerHairCut" name="costPerHairCut" placeholder={expert.costPerHairCut ?? "Cost per cut"} />
+          </CardContent>
         </Card>
         <Card x-chunk="dashboard-04-chunk-1">
           <CardHeader>
