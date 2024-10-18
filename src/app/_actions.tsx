@@ -149,7 +149,7 @@ export async function expertEdit(
     .object({
       name: z.string().min(1).max(255),
     })
-    .or(z.object({ bio: z.string().min(1).max(255) }))
+    .or(z.object({ bio: z.string().min(1).max(255)}))
     .safeParse(formDataWithoutActionFields);
 
   if (!userEdit.success) {

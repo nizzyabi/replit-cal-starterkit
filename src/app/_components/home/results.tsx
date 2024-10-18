@@ -25,7 +25,7 @@ export default function ResultsCard({
   title: string;
   query?: string;
   rating: number;
-  costPerHairCut: number;
+  costPerHairCut: any;
 }) {
   const queryIndexTitle = title.toLowerCase().indexOf(query?.toLowerCase() ?? "");
   const [error, setError] = useState<Error | null>(null);
@@ -75,11 +75,7 @@ export default function ResultsCard({
             </div>
 
             {/* Specialties section */}
-            <div className="flex space-x-2 mt-2">
-              <Badge variant="outline" className="text-sm">Fades</Badge>
-              <Badge variant="outline" className="text-sm">Beard Trim</Badge>
-              <Badge variant="outline" className="text-sm">Straight Razor Shave</Badge>
-            </div>
+            
 
             <div className="flex items-center justify-between">
               
@@ -119,14 +115,8 @@ export function Results(props: { experts: UsersWithoutFilterOptions; signedOut: 
 
   return (
     <Fragment>
-      <div
-        className="flex min-h-[600px] flex-col justify-center bg-cover bg-center bg-no-repeat py-20"
-        style={{ backgroundImage: "url('/barber.svg')" }}>
-        <div className="container  flex flex-col items-center justify-center gap-12">
-          <h1 className="text-center font-display text-7xl font-extrabold tracking-wide text-white shadow-xl">
-            Get your dream haircut
-          </h1>
-        </div>
+      <div>
+        <h1 className="text-5xl font-semibold py-12 text-center">Our Barbers</h1>
       </div>
       <div className="mt-10 flex-1">
         <div className="sm:my-10">
@@ -140,7 +130,7 @@ export function Results(props: { experts: UsersWithoutFilterOptions; signedOut: 
             }>
             <div className="block sm:flex">
               <main className="w-full p-4 pt-0">
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-4">
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-4 mx-auto max-w-7xl">
                   {!query && props.signedOut}
                   {experts.length &&
                     experts.map(({ username, name, id, costPerHairCut }) => (

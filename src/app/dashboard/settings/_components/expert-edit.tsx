@@ -24,6 +24,13 @@ export default function ExpertEditForm(props: InputProps | TextareaProps) {
       ) : (
         <Input {...(props as InputProps)} disabled={isPendingAction} className="max-w-72"/>
       )}
+      {props.name === "costPerHairCut" && (
+        <Textarea
+          {...(props as TextareaProps)}
+          className="min-w-72 text-balance text-sm leading-relaxed text-muted-foreground"
+          disabled={isPendingAction}
+        />
+      )}
       {/* display action states (pending, idle, success & error) */}
       {isPendingAction ? (
         <CardDescription>Saving...</CardDescription>

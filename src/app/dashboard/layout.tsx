@@ -64,7 +64,7 @@ export default async function Layout({
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem>
-                          <Link href="/" className="flex items-center justify-center gap-1">
+                          <Link href="/our-barbers" className="flex items-center justify-center gap-1">
                             <Home className="size-4" />
                             Home
                           </Link>

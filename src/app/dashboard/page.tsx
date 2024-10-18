@@ -83,7 +83,7 @@ export default async function Dashboard() {
 
   return (
     <main className="flex flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-8">
-       <Suspense>
+      
         <CalAccount>
           {(calAccount) => (
             <BookingsTable
@@ -101,7 +101,7 @@ export default async function Dashboard() {
             />
           )}
         </CalAccount>
-      </Suspense>
+      
       <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
         <Card className="sm:col-span-2" x-chunk="dashboard-05-chunk-0">
           <CardHeader className="pb-3">

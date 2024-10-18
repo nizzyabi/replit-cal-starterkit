@@ -1,6 +1,6 @@
 "use client";
 
-import { Booker, useEventTypesPublic } from "@calcom/atoms";
+import { Booker, useEventTypes } from "@calcom/atoms";
 import type { CalAccount, User } from "@prisma/client";
 import { Loader } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -22,7 +22,7 @@ export const ExpertBooker = (
   const router = useRouter();
   const searchParams = useSearchParams();
   const rescheduleUid = searchParams.get("rescheduleUid") ?? undefined;
-  const { isLoading: isLoadingEvents, data: eventTypes } = useEventTypesPublic(calAccount.username ?? "");
+  const { isLoading: isLoadingEvents, data: eventTypes } = useEventTypes(calAccount.username ?? "");
   if (!calAccount.username) {
     return <div className="w-full text-center">Sorry. We couldn&apos;t find this experts&apos; user.</div>;
   }
