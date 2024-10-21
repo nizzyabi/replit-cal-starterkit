@@ -19,7 +19,7 @@ export default function SupabaseHaircutDropzone({ userId }: { userId: string }) 
       const { data, error } = await supabaseBrowserClient.storage
         .from("haircuts")
         .list(`${userId}/`);
-      
+
       if (data) {
         setHaircuts(data.map(file => `haircuts/${userId}/${file.name}`));
       } else if (error) {
@@ -61,19 +61,44 @@ export default function SupabaseHaircutDropzone({ userId }: { userId: string }) 
     },
   });
 
+  // Delete handler to remove the image
+  const handleDelete = async (fileName: string) => {
+    const { error } = await supabaseBrowserClient.storage
+      .from("haircuts")
+      .remove([`${userId}/${fileName}`]);
+
+    if (error) {
+      console.error("Error deleting file:", error);
+    } else {
+      // Remove the deleted image from the state
+      setHaircuts((prev) => prev.filter((image) => image !== `haircuts/${userId}/${fileName}`));
+    }
+  };
+
   return (
     <div className="mx-auto grid w-full gap-4">
       <div className="grid grid-cols-4 gap-2">
-        {haircuts.map((haircut, index) => (
-          <Image
-            key={index}
-            alt={`Haircut ${index + 1}`}
-            className="aspect-square rounded-md object-cover shadow-sm"
-            src={haircut}
-            height="200"
-            width="200"
-          />
-        ))}
+        {haircuts.map((haircut, index) => {
+          const fileName = haircut.split("/").pop(); // Get the file name for deletion
+          return (
+            <div key={index} className="relative group">
+              <Image
+                alt={`Haircut ${index + 1}`}
+                className="aspect-square rounded-md object-cover shadow-sm"
+                src={haircut}
+                height="200"
+                width="200"
+              />
+              {/* Delete Button */}
+              <button
+                type="button"
+                className="absolute top-2 right-24 bg-red-600 text-white px-2 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                onClick={() => handleDelete(fileName!)}>
+                ✕
+              </button>
+            </div>
+          );
+        })}
       </div>
       <div
         {...getRootProps({

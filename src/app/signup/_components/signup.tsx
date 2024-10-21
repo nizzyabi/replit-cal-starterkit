@@ -51,7 +51,7 @@ export const SignupForm = () => {
             </div>
             <div className="grid gap-2">
               <Label htmlFor="username">Username</Label>
-              <AddonFieldPrefix prefix="experts.cal.com/">
+              <AddonFieldPrefix prefix="barber/">
                 <AddonFieldInput id="username" name="username" placeholder="john-doe" required />
               </AddonFieldPrefix>
               {formState?.inputErrors?.username ? (

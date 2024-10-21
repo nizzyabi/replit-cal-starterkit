@@ -41,6 +41,19 @@ export const ExpertBooker = (
 
   return (
     <Booker
+      customClassNames={{
+              bookerContainer: "!bg-[#F5F2FE] [&_button:!rounded-full] border-subtle border",
+              datePickerCustomClassNames: {
+                datePickerDatesActive: "!bg-[#ffffff]",
+              },
+              eventMetaCustomClassNames: {
+                eventMetaTitle: "text-[#7151DC]",
+              },
+              availableTimeSlotsCustomClassNames: {
+                availableTimeSlotsHeaderContainer: "!bg-blue-500",
+                availableTimes: "!bg-blue-500",
+              },
+            }}
       eventSlug={eventTypes[0]?.slug ?? ""}
       username={calAccount.username}
       onCreateBookingSuccess={(booking) => {

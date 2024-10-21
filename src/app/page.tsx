@@ -1,40 +1,20 @@
 "use client";
 
+import { Navbar } from "@/components/navbar";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
-import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import {
   Banknote,
   Calendar,
-  HomeIcon,
   Mail,
   MapPin,
-  MenuIcon,
   Phone,
-  Scissors,
   StarIcon,
-  Store,
-  TicketX,
 } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
-
-const navItems = [
-  { href: "#home", label: "Home" },
-  { href: "#about", label: "About Us" },
-  { href: "#location", label: "Location" },
-  { href: "/our-barbers", label: "Barbers", isPrimary: true },
-];
-
-const mobileNavItems = [
-  { href: "/our-barbers", label: "Home", icon: HomeIcon },
-  { href: "#location", label: "Locations", icon: MapPin },
-  { href: "#barbers", label: "Barbers", icon: Scissors },
-  { href: "#about", label: "About Us", icon: Store },
-  { href: "#cuts", label: "Previous Cuts", icon: TicketX },
-];
 
 const barbers = [
   { name: "Alex Smith", rating: 4.5, price: 20, image: "/alex.jpg" },
@@ -194,59 +174,10 @@ export default function Home() {
 
   return (
     <React.Fragment>
-      <div className="bg-black/95">
-        <header className="mx-auto flex w-full max-w-7xl items-center justify-between bg-black/95 p-4 font-medium text-white">
-          <Link href="/our-barbers">
-            <h1 className="text-2xl font-bold">Cal&apos;s Barbershop</h1>
-          </Link>
-          <nav className="hidden items-center justify-center gap-8 md:flex">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={item.isPrimary ? "rounded-md bg-primary px-4 py-2 text-white" : ""}>
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-          <Sheet>
-            <SheetTrigger className="md:hidden">
-              <MenuIcon className="h-7 w-7" />
-            </SheetTrigger>
-            <SheetContent className="flex w-[300px] flex-col justify-between border-none bg-black/95 text-white">
-              <div>
-                <SheetHeader className="text-left">
-                  <h2 className="mt-5 px-4 text-2xl font-bold">Cal&apos;s Barbershop</h2>
-                </SheetHeader>
-                <nav className="mt-8 text-left">
-                  {mobileNavItems.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className="flex items-center gap-3 rounded-lg p-4 text-xl font-medium transition-colors hover:bg-white/10">
-                      <item.icon className="h-5 w-5" /> {item.label}
-                    </Link>
-                  ))}
-                </nav>
-              </div>
-              <div className="mb-8">
-                <Link href="/our-barbers">
-                  <Button className="w-full">Book Now</Button>
-                </Link>
-                <div className="mt-3 text-center opacity-60">
-                  are you a barber?{" "}
-                  <Link href="/our-barbers" className="underline">
-                    click here
-                  </Link>
-                </div>
-              </div>
-            </SheetContent>
-          </Sheet>
-        </header>
-
+      <div>
+        <Navbar />
         <div className="relative h-screen">
           <img src="/location.jpg" alt="barber" className="h-full w-full object-cover opacity-50" />
-
           <motion.div
             className="absolute inset-0 flex flex-col items-center justify-center text-center"
             initial="hidden"
@@ -261,9 +192,9 @@ export default function Home() {
               2203 Sunset Blvd, Los Angeles, CA 90026
             </motion.p>
             <motion.div variants={heroItemVariants}>
-              <Button className="mt-4 h-12 w-40 bg-orange-500 text-lg text-white transition-all duration-300 ease-in-out hover:scale-105">
+              <Link href="/our-barbers"><Button className="mt-4 h-12 w-40 bg-orange-500 text-lg text-white transition-all duration-300 ease-in-out hover:scale-105">
                 Book Now
-              </Button>
+              </Button></Link>
             </motion.div>
           </motion.div>
         </div>
@@ -352,7 +283,7 @@ export default function Home() {
             {haircuts.map((haircut, index) => (
               <motion.div
                 key={index}
-                className="overflow-hidden rounded-lg shadow-lg border border-gray-300 hover:shadow-xl transition-shadow duration-300 ease-in-out"
+                className="overflow-hidden rounded-lg shadow-lg  hover:shadow-xl transition-shadow duration-300 ease-in-out border"
                 variants={fadeInUpVariants}
               >
                 <img
@@ -360,9 +291,9 @@ export default function Home() {
                   alt={haircut.name}
                   className="h-64 w-full object-cover rounded-t-lg bg-gray-100"
                 />
-                <div className="p-6 bg-white rounded-b-lg space-y-2">
-                  <h3 className="text-xl font-semibold text-gray-800">{haircut.name}</h3>
-                  <p className="text-gray-500 text-sm">{haircut.description}</p>
+                <div className="p-6 rounded-b-lg space-y-2">
+                  <h3 className="text-xl font-semibold">{haircut.name}</h3>
+                  <p className="opacity-40 text-sm">{haircut.description}</p>
                 </div>
               </motion.div>
             ))}
@@ -379,7 +310,7 @@ export default function Home() {
           variants={fadeInUpVariants}>
           <h2 className="text-6xl font-semibold">Testimonials</h2>
           <p className='opacity-60 text-lg mb-12'>See what our clients say about us</p>
-          <motion.div
+          {/* <motion.div
             variants={{
               hidden: { opacity: 0 },
               visible: {
@@ -421,7 +352,7 @@ export default function Home() {
               </p>
               <p className="text-sm uppercase tracking-wide">Years Open</p>
             </motion.div>
-          </motion.div>
+          </motion.div> */}
           <motion.div
             className="mx-auto mt-12 grid max-w-7xl gap-8 px-4 sm:grid-cols-2 lg:grid-cols-3"
             variants={{
@@ -430,12 +361,23 @@ export default function Home() {
                 opacity: 1,
                 transition: { staggerChildren: 0.1 },
               },
-            }}>
+            }}
+          >
             {testimonials.map((testimonial, index) => (
-              <motion.div key={index} className="rounded-lg border p-6 shadow-sm" variants={fadeInUpVariants}>
-                <p className="mb-4 text-lg italic text-gray-600">&quot;{testimonial.quote}&quot;</p>
-                <div className="flex items-center">
-                  <img src={testimonial.image} alt="Client" className="mr-4 h-12 w-12 rounded-lg object-cover" />
+              <motion.div
+                key={index}
+                className="flex flex-col justify-between rounded-lg border p-6 shadow-sm"
+                variants={fadeInUpVariants}
+              >
+                <div className="flex-grow">
+                  <p className="mb-4 text-lg italic opacity-60">&quot;{testimonial.quote}&quot;</p>
+                </div>
+                <div className="mt-4 flex items-center">
+                  <img
+                    src={testimonial.image}
+                    alt="Client"
+                    className="mr-4 h-12 w-12 rounded-lg object-cover"
+                  />
                   <div className="text-left">
                     <p className="font-semibold">{testimonial.name}</p>
                     <p className="text-sm text-gray-500">{testimonial.type}</p>
@@ -444,6 +386,7 @@ export default function Home() {
               </motion.div>
             ))}
           </motion.div>
+
           
         </motion.section>
 

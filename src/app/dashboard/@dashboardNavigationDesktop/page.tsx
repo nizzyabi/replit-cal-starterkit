@@ -14,7 +14,7 @@ export default function DashboardNavigationDesktopDefault() {
             href={navigationItem.href}
             className={cn(
               "flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:bg-muted/50 hover:text-primary",
-              pathname === navigationItem.href && "bg-muted text-primary"
+              pathname === navigationItem.href && " text-primary"
             )}
             prefetch={false}>
             <navigationItem.icon className="size-4" />

@@ -116,9 +116,9 @@ export function Results(props: { experts: UsersWithoutFilterOptions; signedOut: 
   return (
     <Fragment>
       <div>
-        <h1 className="text-5xl font-semibold py-12 text-center">Our Barbers</h1>
+        <h1 className="text-5xl font-semibold pt-10 text-center">Our Barbers</h1>
       </div>
-      <div className="mt-10 flex-1">
+      <div className="mt-5 flex-1">
         <div className="sm:my-10">
           <Suspense
             fallback={
@@ -130,7 +130,7 @@ export function Results(props: { experts: UsersWithoutFilterOptions; signedOut: 
             }>
             <div className="block sm:flex">
               <main className="w-full p-4 pt-0">
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-4 mx-auto max-w-7xl">
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 mx-auto max-w-7xl">
                   {!query && props.signedOut}
                   {experts.length &&
                     experts.map(({ username, name, id, costPerHairCut }) => (

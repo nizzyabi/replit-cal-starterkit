@@ -48,23 +48,7 @@ const UserDetailsStep = ({ userId }: { userId: string }) => {
           maxLength={500}
         />
       </div>
-      <div className="mt-2">
-        <Label htmlFor="pricePerHairCut">Price per haircut</Label>
-        <div className="relative mt-1">
-          <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
-            $
-          </span>
-          <Input
-            placeholder="20"
-            className="pl-8 resize-none"
-            id="pricePerHairCut"
-            name="pricePerHairCut"
-            type="number"
-            min={1}  
-            step="1"  
-          />
-        </div>
-      </div>
+      
       <div className="mt-2">
         <Label htmlFor="haircutImages">Your Haircuts</Label>
         <SupabaseHaircutDropzone 

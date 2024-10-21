@@ -4,7 +4,9 @@ import { currentUser } from "@/auth";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 import "@/styles/globals.css";
-import Link from 'next/link'
+import Link from 'next/link';
+
+
 /**
  * [@calcom] In your root layout, make sure you import the atoms' global styles so that you get our shiny styles
  * @link https://cal.com/docs/platform/quick-start#5.3-setup-root-of-your-app
@@ -13,17 +15,14 @@ import "@calcom/atoms/globals.min.css";
 import { Analytics } from "@vercel/analytics/react";
 import { type Metadata } from "next";
 import { AxiomWebVitals } from "next-axiom";
-import { Inter } from "next/font/google";
+import { Roboto_Slab } from "next/font/google";
 import localFont from "next/font/local";
 import { Toaster } from "sonner";
 
-const interFont = Inter({ subsets: ["latin"], variable: "--font-inter", preload: true, display: "swap" });
-const calFont = localFont({
-  src: "../fonts/CalSans-SemiBold.woff2",
-  variable: "--font-cal",
-  preload: true,
-  display: "block",
-  weight: "600",
+
+const robotoSlab = Roboto_Slab({
+  subsets: ['latin'],
+  weight: ['400', '700'],
 });
 
 export const metadata: Metadata = {
@@ -60,7 +59,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang="en" dir="ltr" suppressHydrationWarning>
       <head />
       <AxiomWebVitals />
-      <body className={cn("antialiased", calFont.variable, interFont.variable)}>
+      <body className={cn(robotoSlab.className)}>
         <Providers defaultTheme="system" enableSystem attribute="class">
           <div className="flex min-h-screen flex-col">
             <UseCalAtoms
@@ -71,7 +70,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           {/* <TailwindIndicator /> */}
         </Providers>
         <Toaster />
-        <footer className="flex justify-evenly bg-black/95 py-20 text-white">
+        <footer className="flex justify-evenly py-20 text-white">
           <div>
             <h1 className="mb-4 text-lg font-bold">Cal&apos;s Barbershop</h1>
             <p className="opacity-60 text-sm">All rights reserved.</p>
