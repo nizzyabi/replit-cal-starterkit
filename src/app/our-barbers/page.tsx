@@ -1,6 +1,6 @@
 import { db } from "prisma/client";
 import React, { Suspense } from "react";
-import { Results } from "../_components/home/results";
+import { OurBarbersSection } from "../_components/home/our-barbers-section";
 import { Navbar } from "@/components/navbar";
 
 export default async function OurBarbers() {
@@ -14,8 +14,8 @@ export default async function OurBarbers() {
       <Navbar />
       <main className="flex-1">
         <Suspense>
-          <div>
-            <Results experts={experts} signedOut={<></>} />
+          <div className="mt-12">
+            <OurBarbersSection experts={experts} signedOut={<></>} />
           </div>
         </Suspense>
       </main>

@@ -99,7 +99,7 @@ export default async function ExpertDetails({ params }: { params: { expertUserna
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-600">{expert.bio}</p>
+              <p className="opacity-50">{expert.bio}</p>
             </CardContent>
           </Card>
         </div>
@@ -110,7 +110,7 @@ export default async function ExpertDetails({ params }: { params: { expertUserna
             <Card className="h-full w-full">
               <CardHeader>
                 <CardTitle className="text-2xl font-bold">Book with {expert.name}</CardTitle>
-                <CardDescription className="text-sm text-gray-500">
+                <CardDescription className="text-sm opacity-50">
                   See available services and book an appointment below.
                 </CardDescription>
               </CardHeader>
@@ -134,31 +134,31 @@ export default async function ExpertDetails({ params }: { params: { expertUserna
       {/* Haircut Gallery Section */}
       <div className="w-full px-5">
         <Card className="w-full shadow-lg rounded-lg overflow-hidden">
-          <CardHeader>
-            <CardTitle className="text-2xl font-bold">Haircuts by {expert.name}</CardTitle>
-            <CardDescription className="text-sm">See some of the amazing haircuts done on previous clients.</CardDescription>
+          <CardHeader className="pb-4">
+            <CardTitle className="text-3xl font-extrabold text-white">Haircuts by {expert.name}</CardTitle>
+            <CardDescription className="text-md text-gray-400">See some of the amazing haircuts done on previous clients.</CardDescription>
           </CardHeader>
-          <CardContent className="pb-3 px-5 lg:px-2">
-            <div className="grid grid-cols-1 sm:grid-cols-2 justify-items-center gap-6 md:grid-cols-3">
+          <CardContent className="px-5 lg:px-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {imageUrls.length === 0
-                ? // Show skeletons if no images are loaded yet
-                  Array.from({ length: 3 }).map((_, index) => (
-                    <Skeleton key={index} className="h-[350px] w-[350px] rounded-sm" />
+                ? Array.from({ length: 3 }).map((_, index) => (
+                    <Skeleton key={index} className="h-[350px] w-[350px] rounded-lg" />
                   ))
-                : // Show actual images once they're available
-                  imageUrls.map((imageUrl, index) => (
-                    <div key={index} className="flex items-center justify-center">
+                : imageUrls.map((imageUrl, index) => (
+                    <div key={index} className="flex flex-col items-center">
                       <img
                         alt={`Haircut ${index + 1}`}
                         className="h-[350px] w-[350px] rounded-lg object-cover shadow-lg hover:scale-105 transition-transform"
                         src={imageUrl}
                       />
+                      <span className="mt-3 text-white text-sm">Haircut Style {index + 1}</span> {/* Example of caption */}
                     </div>
                   ))}
             </div>
           </CardContent>
         </Card>
       </div>
+
     </div>
   );
 }

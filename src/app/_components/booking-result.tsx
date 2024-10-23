@@ -183,7 +183,7 @@ ${stripCalOAuthClientIdFromEmail(previousAttendee.email)}`
                         href={
                           (bookingPrevious.data?.metadata as { videoCallUrl?: string })?.videoCallUrl ?? "#"
                         }>
-                        Online (Cal Video)
+                       25 carbery
                       </Link>
                     </span>
                   ) : (
@@ -210,7 +210,7 @@ ${stripCalOAuthClientIdFromEmail(previousAttendee.email)}`
                           ? "#"
                           : (booking?.metadata as { videoCallUrl?: string })?.videoCallUrl ?? "#"
                       }>
-                      Online (Cal Video)
+                      
                       <ExternalLinkIcon className="size-4" />
                     </Link>
                   </span>

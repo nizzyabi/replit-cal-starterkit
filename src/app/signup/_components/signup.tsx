@@ -35,8 +35,8 @@ export const SignupForm = () => {
     <form action={dispatch}>
       <Card className="mx-auto max-w-sm">
         <CardHeader>
-          <CardTitle className="text-xl">Sign Up</CardTitle>
-          <CardDescription>Enter your information to create an account</CardDescription>
+          <CardTitle className="text-xl">Barber Sign Up</CardTitle>
+          <CardDescription>Enter your information to create a barber account</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid gap-4">
@@ -62,7 +62,7 @@ export const SignupForm = () => {
             </div>
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" name="email" type="email" placeholder="m@example.com" required />
+              <Input id="email" name="email" type="email" placeholder="john-doe@example.com" required />
               {formState?.inputErrors?.email ? (
                 <div className="text-sm font-medium text-red-700" aria-live="polite">
                   {formState.inputErrors.email[0]}
@@ -71,7 +71,7 @@ export const SignupForm = () => {
             </div>
             <div className="grid gap-2">
               <Label htmlFor="password">Password</Label>
-              <Input id="password" name="password" type="password" />
+              <Input id="password" placeholder="●●●●●●●" name="password" type="password" />
               {formState?.inputErrors?.password ? (
                 <div className="text-sm font-medium text-red-700" aria-live="polite">
                   {formState.inputErrors.password[0]}
@@ -97,11 +97,11 @@ export const SignupForm = () => {
           </div>
         </CardContent>
       </Card>
-      <div className="flex justify-center">
+      {/* <div className="flex justify-center">
         <Button className="mt-6">
           <Link href="/dashboard">Go to Dashboard</Link>
         </Button>
-      </div>
+      </div> */}
     </form>
   );
 };

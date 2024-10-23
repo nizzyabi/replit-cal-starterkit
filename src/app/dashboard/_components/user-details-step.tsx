@@ -36,7 +36,7 @@ const UserDetailsStep = ({ userId }: { userId: string }) => {
 
   return (
     <form className="mt-10" action={dispatch}>
-      <h1 className="text-2xl font-display font-bold text-center mb-3">Your Profile</h1>
+      <h1 className="text-5xl font-display font-bold text-center mb-3">Your Profile</h1>
       <SupabaseReactDropzone userId={userId ?? "clxj4quka0000gebuthdxi1cp"} />
       <div className="mt-2">
         <Label htmlFor="bio">Bio</Label>

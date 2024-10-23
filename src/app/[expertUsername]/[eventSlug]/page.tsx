@@ -57,7 +57,7 @@ export default async function BookerPage({
   const descriptionWithoutHtmlTags = eventType.data?.description.replace(/<[^>]*>?/gm, "");
   return (
     <div className="mb-4 flex flex-1 flex-col items-center gap-4 overflow-auto">
-      <header className="flex w-full flex-col justify-between gap-4 rounded-md bg-muted/50 px-8 py-4  sm:px-10 lg:flex-row lg:px-12 2xl:px-36">
+      {/* <header className="flex w-full flex-col justify-between gap-4 rounded-md bg-muted/50 px-8 py-4  sm:px-10 lg:flex-row lg:px-12 2xl:px-36">
         <div className="flex items-center gap-x-6">
           <Image
             alt="Expert image"
@@ -67,14 +67,19 @@ export default async function BookerPage({
             width="64"
           />
           <div className="space-y-2">
-            <h1 className="text-2xl font-semibold capitalize leading-none tracking-tight">
-              {expert.name}: {eventType.data?.title}
-            </h1>
+            <div>
+              <h1 className="text-2xl font-semibold capitalize leading-none tracking-tight">
+                {expert.name}: 
+              </h1>
+              <h1 >
+                {eventType.data?.title}
+              </h1>
+            </div>
             <p className="text-sm text-muted-foreground">{descriptionWithoutHtmlTags}</p>
           </div>
         </div>
-      </header>
-      <div className="mx-auto mt-4 grid w-full gap-2 px-8 sm:px-10 lg:px-12 2xl:px-36">
+      </header> */}
+      <div className="flex items-center justify-center min-h-screen mx-auto  grid w-full gap-2 px-8 sm:px-10 lg:px-12 2xl:px-36">
         {Boolean(expert.calAccount) && (
           <ExpertBooker
             calAccount={{ username: expert.calAccount.username }}

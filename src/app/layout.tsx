@@ -5,12 +5,6 @@ import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 import "@/styles/globals.css";
 import Link from 'next/link';
-
-
-/**
- * [@calcom] In your root layout, make sure you import the atoms' global styles so that you get our shiny styles
- * @link https://cal.com/docs/platform/quick-start#5.3-setup-root-of-your-app
- */
 import "@calcom/atoms/globals.min.css";
 import { Analytics } from "@vercel/analytics/react";
 import { type Metadata } from "next";
@@ -18,7 +12,8 @@ import { AxiomWebVitals } from "next-axiom";
 import { Roboto_Slab } from "next/font/google";
 import localFont from "next/font/local";
 import { Toaster } from "sonner";
-
+import { Footer } from '@/components/footer';
+import { TailwindIndicator } from "./tailwind-indicator";
 
 const robotoSlab = Roboto_Slab({
   subsets: ['latin'],
@@ -67,51 +62,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               {children}
             </UseCalAtoms>
           </div>
-          {/* <TailwindIndicator /> */}
+          <TailwindIndicator /> 
         </Providers>
         <Toaster />
-        <footer className="flex justify-evenly py-20 text-white">
-          <div>
-            <h1 className="mb-4 text-lg font-bold">Cal&apos;s Barbershop</h1>
-            <p className="opacity-60 text-sm">All rights reserved.</p>
-          </div>
-          <div>
-            <h1 className="mb-4 text-lg font-bold">Locations</h1>
-            <Link href="/" className="space-y-2 text-sm opacity-60">
-              <p>Texas</p>
-              <p>California</p>
-              <p>New York</p>
-              <p>London</p>
-              <p>Paris</p>
-              <p>Tokyo</p>
-            </Link>
-          </div>
-          <div>
-            <h1 className="mb-4 text-lg font-bold">Events</h1>
-            <Link href="/" className="space-y-2 text-sm opacity-60">
-              <p>Bookings</p>
-              <p>Events</p>
-              <p>Barbers</p>
-            </Link>
-          </div>
-          <div>
-            <h1 className="mb-4 text-lg font-bold">Contact</h1>
-            <Link href="/" className="space-y-2 text-sm opacity-60">
-              <p>Phone</p>
-              <p>Email</p>
-              <p>Message</p>
-            </Link>
-          </div>
-          <div>
-            <h1 className="mb-4 text-lg font-bold">Socials</h1>
-            <Link href="/" className="space-y-2 text-sm opacity-60">
-              <p>Youtube</p>
-              <p>Instagram</p>
-              <p>Facebook</p>
-              <p>X</p>
-            </Link>
-          </div>
-        </footer>
+        <Footer />
       </body>
       <Analytics />
     </html>

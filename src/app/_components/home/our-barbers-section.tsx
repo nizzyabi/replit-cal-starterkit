@@ -3,34 +3,38 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { Banknote, Loader, StarIcon } from "lucide-react";
+import { Loader, StarIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useQueryState, parseAsString } from "nuqs";
 import { type db } from "prisma/client";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import React, { Suspense } from "react";
-import { Badge } from '@/components/ui/badge';
 
-export default function ResultsCard({
+export default function OurBarbersCard({
   slug,
   userId,
   title,
   query,
-  rating,
-  costPerHairCut,
 }: {
   slug: string;
   userId?: string;
   title: string;
   query?: string;
-  rating: number;
+  
   costPerHairCut: any;
 }) {
   const queryIndexTitle = title.toLowerCase().indexOf(query?.toLowerCase() ?? "");
   const [error, setError] = useState<Error | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [randomRating, setRandomRating] = useState(4.8); // Default rating
 
+  useEffect(() => {
+    // Generate a random rating between 4.0 and 5.0
+    const rating = (Math.random() * 1 + 4).toFixed(1);
+    setRandomRating(rating);
+  }, []);
+  
   return (
     <div className="col-span-1 flex">
       <Card className="mx-auto w-full max-w-sm overflow-hidden rounded-lg shadow-lg">
@@ -70,17 +74,12 @@ export default function ResultsCard({
               </h3>
               <div className="text-[#facc14] flex items-center">
                 <StarIcon className="h-5 w-5" fill='#facc14' />
-                <span className="ml-1">4.8</span>
+                <span className="ml-1">{randomRating}</span>
               </div>
             </div>
 
-            {/* Specialties section */}
-            
-
             <div className="flex items-center justify-between">
-              
-              <div className="text-green-600/80 px-2.5 py-1 border-green-600 rounded-md bg-green-200/40">
-                <span className="text-green-600 flex items-center justify-center"><Banknote className="h-5 w-5 mr-1.5"/>${costPerHairCut}</span>
+              <div className="">
               </div>
               <Link href={"/" + slug}>
                 <Button
@@ -102,7 +101,7 @@ export default function ResultsCard({
 
 type UsersWithoutFilterOptions = Awaited<ReturnType<typeof db.user.findMany>>;
 
-export function Results(props: { experts: UsersWithoutFilterOptions; signedOut: JSX.Element }) {
+export function OurBarbersSection(props: { experts: UsersWithoutFilterOptions; signedOut: JSX.Element }) {
   const [query] = useQueryState("q", parseAsString);
 
   const experts = props.experts.filter((expert) => {
@@ -134,13 +133,13 @@ export function Results(props: { experts: UsersWithoutFilterOptions; signedOut: 
                   {!query && props.signedOut}
                   {experts.length &&
                     experts.map(({ username, name, id, costPerHairCut }) => (
-                      <ResultsCard
+                      <OurBarbersCard
                         key={username}
                         slug={username ?? ""}
                         userId={id ?? ""}
                         title={name ?? "Your title"}
                         query={query ?? undefined}
-                        rating={5}
+                       
                         costPerHairCut={costPerHairCut}
                       />
                     ))}

@@ -17,11 +17,9 @@ import { Suspense } from "react";
 export default async function Dashboard() {
   const sesh = await auth();
   if (!sesh.user.id) {
-    return <div>Not logged in</div>;
+    return <div className="text-center text-lg mt-10">You are not logged in</div>;
   }
-  /** [@calcom] We're fetching the bookings on the server to display them here
-   * Since `filters` is currently a required parameter, we have to iterate a bit and create our flatMap in the end
-   */
+
   const filters = ["upcoming", "recurring", "past", "cancelled", "unconfirmed"] satisfies Array<
     GetBookingsInput["filters"]["status"]
   >;
@@ -44,7 +42,6 @@ export default async function Dashboard() {
     }
     return response.data.bookings;
   });
-  /** [@calcom] End of fetching bookings */
 
   const lastWeekBookings = bookings.filter((booking) => {
     const startOfWeek = dayjs().startOf("week").subtract(1, "week");
@@ -71,7 +68,6 @@ export default async function Dashboard() {
   });
 
   const thisYearBookings = bookings.filter((booking) => {
-    // only show the bookings with booking.startTime for the current year:
     const startOfYear = dayjs().startOf("year");
     const endOfYear = dayjs().endOf("year");
     return dayjs(booking.startTime).isAfter(startOfYear) && dayjs(booking.startTime).isBefore(endOfYear);
@@ -82,70 +78,72 @@ export default async function Dashboard() {
   };
 
   return (
-    <main className="flex flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-8">
-      
-        <CalAccount>
-          {(calAccount) => (
-            <BookingsTable
-              bookings={{
-                all: bookings,
-                currentWeek: thisWeekBookings,
-                currentMonth: thisMonthBookings,
-                currentYear: thisYearBookings,
-              }}
-              user={{
-                timeZone: calAccount.timeZone,
-                username: calAccount.username,
-                email: stripCalOAuthClientIdFromEmail(calAccount.email),
-              }}
-            />
-          )}
-        </CalAccount>
-      
-      <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
-        <Card className="sm:col-span-2" x-chunk="dashboard-05-chunk-0">
-          <CardHeader className="pb-3">
-            <CardTitle>Your Bookings</CardTitle>
-            <CardDescription className="max-w-lg text-balance leading-relaxed">
-              See all your bookings for your services.
-            </CardDescription>
-            <Link href="/dashboard/settings/booking-events" className="pt-2">
-              <Button>
-                Manage booking events
-                <ArrowRight className="ml-1 size-4" />
-              </Button>
-            </Link>
-          </CardHeader>
-         
-        </Card>
-        <Card x-chunk="dashboard-05-chunk-1">
+    <main className="flex flex-col gap-6 p-4 md:p-8">
+      <h1 className="text-4xl font-bold tracking-tight mb-6">Dashboard</h1>
+      <CalAccount>
+        {(calAccount) => (
+          <BookingsTable
+            bookings={{
+              all: bookings,
+              currentWeek: thisWeekBookings,
+              currentMonth: thisMonthBookings,
+              currentYear: thisYearBookings,
+            }}
+            user={{
+              timeZone: calAccount.timeZone,
+              username: calAccount.username,
+              email: stripCalOAuthClientIdFromEmail(calAccount.email),
+            }}
+          />
+        )}
+      </CalAccount>
+
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <Card className="shadow-md">
           <CardHeader className="pb-2">
             <CardDescription>This Week</CardDescription>
-            <CardTitle className="text-4xl">{thisWeekBookings.length}</CardTitle>
+            <CardTitle className="text-4xl font-semibold">{thisWeekBookings.length}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-xs text-muted-foreground">
+            {/* <div className="text-sm text-muted-foreground">
               {lastWeekBookings.length > 0
                 ? `${changeFromPrevious(thisWeekBookings.length, lastWeekBookings.length)}% from last week`
-                : "From 0 last week"}
-            </div>
+                : "No bookings last week"}
+            </div> */}
+            <Progress value={thisWeekBookings.length} max={100} className='mt-3'/>
           </CardContent>
         </Card>
-        <Card x-chunk="dashboard-05-chunk-2">
+
+        <Card className="shadow-md">
           <CardHeader className="pb-2">
             <CardDescription>This Month</CardDescription>
-            <CardTitle className="text-4xl">{thisMonthBookings.length}</CardTitle>
+            <CardTitle className="text-4xl font-semibold">{thisMonthBookings.length}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-xs text-muted-foreground">
+            {/* <div className="text-sm text-muted-foreground">
               {lastMonthBookings.length > 0
-                ? `${changeFromPrevious(thisMonthBookings.length, lastMonthBookings.length)}% from last week`
-                : "From 0 last month"}
-            </div>
+                ? `${changeFromPrevious(thisMonthBookings.length, lastMonthBookings.length)}% from last month`
+                : "No bookings last month"}
+            </div> */}
+            <Progress value={thisMonthBookings.length} max={2} className='mt-3'/>
+          </CardContent>
+        </Card>
+
+        <Card className="shadow-md">
+          <CardHeader className="pb-2">
+            <CardDescription>This Year</CardDescription>
+            <CardTitle className="text-4xl font-semibold">{thisYearBookings.length}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {/* <div className="text-sm text-muted-foreground">
+              {lastMonthBookings.length > 0
+                ? `${changeFromPrevious(thisYearBookings.length, lastYearBookings.length)}% from last year`
+                : "No bookings last year"}
+            </div> */}
+            <Progress value={thisYearBookings.length} max={2} className='mt-3'/>
           </CardContent>
         </Card>
       </div>
-     
     </main>
   );
 }

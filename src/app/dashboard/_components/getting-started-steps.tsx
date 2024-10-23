@@ -15,7 +15,7 @@ const GettingStarted = ({
   userId: string; 
 }) => {
   return (
-    <main className="flex-1 bg-muted/40">
+    <main className="flex-1">
       <div className="flex items-center justify-center p-10">
         <div className="w-1/2">
           <UserDetailsStep userId={userId} />

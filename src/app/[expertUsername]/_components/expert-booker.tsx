@@ -42,18 +42,20 @@ export const ExpertBooker = (
   return (
     <Booker
       customClassNames={{
-              bookerContainer: "!bg-[#F5F2FE] [&_button:!rounded-full] border-subtle border",
-              datePickerCustomClassNames: {
-                datePickerDatesActive: "!bg-[#ffffff]",
-              },
-              eventMetaCustomClassNames: {
-                eventMetaTitle: "text-[#7151DC]",
-              },
-              availableTimeSlotsCustomClassNames: {
-                availableTimeSlotsHeaderContainer: "!bg-blue-500",
-                availableTimes: "!bg-blue-500",
-              },
-            }}
+        bookerContainer: "!bg-blue-500 [&_button:!rounded-full] border-subtle border",
+          datePickerCustomClassNames: {
+            datePickerDatesActive: "!bg-blue-500",
+          },
+          eventMetaCustomClassNames: {
+            eventMetaTitle: "text-blue-500",
+          },
+          availableTimeSlotsCustomClassNames: {
+            availableTimeSlotsHeaderContainer: "!bg-blue-500",
+            availableTimes: "!bg-blue-500",
+          },
+      }}
+      
+      locationUrl={'25 Carbery Drive'}
       eventSlug={eventTypes[0]?.slug ?? ""}
       username={calAccount.username}
       onCreateBookingSuccess={(booking) => {

@@ -22,7 +22,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Textarea } from "@/components/ui/textarea";
 import { MoreHorizontal, PlusCircle, Video } from "lucide-react";
 import { Fragment } from "react";
@@ -35,8 +34,6 @@ export default async function DashboardSettingsBookingEvents() {
   const getEventTypes = await cal({ user: { id: sesh?.user.id } }).get("/v2/event-types");
   if (getEventTypes.status === "error") {
     console.error("[dashboard/settings/booking-events/page.tsx] Error fetching event types", getEventTypes);
-    // TODO debug this error
-    console.warn(`[dashboard/settings/booking-events/page.tsx] Error fetching event types. Check logs above`);
   }
   const eventTypes = getEventTypes?.data?.eventTypeGroups?.flatMap((group) => group.eventTypes) ?? [
     {
@@ -66,15 +63,41 @@ export default async function DashboardSettingsBookingEvents() {
       id: 2,
     },
   ];
+
   return (
     <Fragment>
+      <h1 className="text-3xl font-bold">Manage Booking Events</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {eventTypes.map((eventType) => (
+          <Card key={eventType.id}>
+            <CardHeader>
+              <CardTitle className='flex items-center justify-between'>
+                <p>{eventType.title}</p>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button>
+                      Edit
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                    <EventTypeDelete eventTypeId={eventType.id} />
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </CardTitle>
+              
+            </CardHeader>
+            
+            
+          </Card>
+        ))}
+      </div>
       <div className="flex items-center">
         <div className="mr-auto flex items-center gap-2">
           <Dialog>
             <DialogTrigger asChild>
-              <Button size="sm" className="h-8 gap-1">
-                <PlusCircle className="size-3.5" />
-                <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Add Haircut Session</span>
+              <Button>
+                Add Haircut Session
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
@@ -86,7 +109,6 @@ export default async function DashboardSettingsBookingEvents() {
                   <div className="grid grid-cols-4 items-center gap-4">
                     {(
                       [
-                        // Remove the 'length' field from here
                         {
                           name: "slug",
                           label: "Booking URL",
@@ -110,7 +132,6 @@ export default async function DashboardSettingsBookingEvents() {
                         <Input id={name} name={name} {...inputAttributes} className="col-span-3" />
                       </Fragment>
                     ))}
-                    {/* Add a hidden input for the fixed duration */}
                     <input type="hidden" name="length" value="60" />
                   </div>
                 </div>
@@ -122,58 +143,6 @@ export default async function DashboardSettingsBookingEvents() {
           </Dialog>
         </div>
       </div>
-      <Card>
-        <CardHeader>
-          <CardTitle>Event Name</CardTitle>
-          <CardDescription>Manage your event type and view their sales performance.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Booking Name</TableHead>
-
-                <TableHead>
-                  <span className="sr-only">Actions</span>
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {eventTypes.map((eventType) => (
-                <TableRow key={eventType.id}>
-                  <TableCell>
-                    <div className="font-medium capitalize">{eventType.title}</div>
-                  </TableCell>
-
-                  <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button aria-haspopup="true" size="icon" variant="ghost">
-                          <MoreHorizontal className="h-4 w-4" />
-                          <span className="sr-only">Toggle menu</span>
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <EventTypeDelete eventTypeId={eventType.id} />
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-        <CardFooter>
-          <div className="text-xs text-muted-foreground">
-            Showing{" "}
-            <strong>
-              {eventTypes.length > 0 ? 1 : 0}-{eventTypes.length > 10 ? 10 : eventTypes.length}
-            </strong>{" "}
-            of <strong>{eventTypes.length}</strong> event types
-          </div>
-        </CardFooter>
-      </Card>
     </Fragment>
   );
 }

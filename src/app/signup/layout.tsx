@@ -15,7 +15,7 @@ import { type ReactNode } from "react";
 export default function SignupLayout({ children }: { children?: ReactNode }) {
   return (
     <>
-      <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      {/* <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-14 max-w-screen-2xl items-center">
           <Sheet>
             <SheetTrigger asChild>
@@ -55,7 +55,7 @@ export default function SignupLayout({ children }: { children?: ReactNode }) {
             </BreadcrumbList>
           </Breadcrumb>
         </div>
-      </header>
+      </header> */}
       <main className="flex-1">{children}</main>
     </>
   );
