@@ -49,6 +49,15 @@ export default async function ExpertDetails({ params }: { params: { expertUserna
     },
   });
 
+  // Log raw event types for debugging
+  console.log("Raw event types:", eventTypes.data);
+
+  // Filter out the default Cal.com event types (first 4)
+  const customEventTypes = eventTypes.data.slice(4);
+
+  // Log filtered event types
+  console.log("Filtered event types:", customEventTypes);
+
   const supabase = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
 
   const { data: haircutImages, error } = await supabase.storage.from("haircuts").list(`${expert.id}/`);
@@ -115,7 +124,8 @@ export default async function ExpertDetails({ params }: { params: { expertUserna
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex flex-col gap-4">
-                {eventTypes.data.map((eventType) => (
+                
+                {customEventTypes.map((eventType) => (
                   <div key={eventType.id} className="p-5 bg-primary/20 rounded-lg flex justify-between items-center shadow-sm hover:shadow-md transition-shadow">
                     <div className="font-medium text-lg capitalize">{eventType.title}</div>
                     <Link href={`/${expert.username}/${eventType.slug}`}>
@@ -151,17 +161,13 @@ export default async function ExpertDetails({ params }: { params: { expertUserna
                         className="h-[350px] w-[350px] rounded-lg object-cover shadow-lg hover:scale-105 transition-transform"
                         src={imageUrl}
                       />
-                      <span className="mt-3 text-white text-sm">Haircut Style {index + 1}</span> {/* Example of caption */}
+                      <span className="mt-3 text-white text-sm">Haircut Style {index + 1}</span>
                     </div>
                   ))}
             </div>
           </CardContent>
         </Card>
       </div>
-
     </div>
   );
 }
-
-
-

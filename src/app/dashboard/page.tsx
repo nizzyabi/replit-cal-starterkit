@@ -4,15 +4,10 @@ import { BookingsTable } from "./_components/bookings-table";
 import { CalAccount, auth } from "@/auth";
 import { cal } from "@/cal/api";
 import { stripCalOAuthClientIdFromEmail } from "@/cal/utils";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { cn } from "@/lib/utils";
 import dayjs from "dayjs";
-import { ArrowRight } from "lucide-react";
-import Link from "next/link";
 import { type GetBookingsInput } from "node_modules/@calcom/atoms/dist/packages/platform/types";
-import { Suspense } from "react";
 
 export default async function Dashboard() {
   const sesh = await auth();
@@ -73,10 +68,6 @@ export default async function Dashboard() {
     return dayjs(booking.startTime).isAfter(startOfYear) && dayjs(booking.startTime).isBefore(endOfYear);
   });
 
-  const changeFromPrevious = (current: number, previous: number) => {
-    return previous === 0 ? 100 : Math.round(((current - previous) / previous) * 100);
-  };
-
   return (
     <main className="flex flex-col gap-6 p-4 md:p-8">
       <h1 className="text-4xl font-bold tracking-tight mb-6">Dashboard</h1>
@@ -105,11 +96,6 @@ export default async function Dashboard() {
             <CardTitle className="text-4xl font-semibold">{thisWeekBookings.length}</CardTitle>
           </CardHeader>
           <CardContent>
-            {/* <div className="text-sm text-muted-foreground">
-              {lastWeekBookings.length > 0
-                ? `${changeFromPrevious(thisWeekBookings.length, lastWeekBookings.length)}% from last week`
-                : "No bookings last week"}
-            </div> */}
             <Progress value={thisWeekBookings.length} max={100} className='mt-3'/>
           </CardContent>
         </Card>
@@ -120,11 +106,6 @@ export default async function Dashboard() {
             <CardTitle className="text-4xl font-semibold">{thisMonthBookings.length}</CardTitle>
           </CardHeader>
           <CardContent>
-            {/* <div className="text-sm text-muted-foreground">
-              {lastMonthBookings.length > 0
-                ? `${changeFromPrevious(thisMonthBookings.length, lastMonthBookings.length)}% from last month`
-                : "No bookings last month"}
-            </div> */}
             <Progress value={thisMonthBookings.length} max={2} className='mt-3'/>
           </CardContent>
         </Card>
@@ -135,11 +116,6 @@ export default async function Dashboard() {
             <CardTitle className="text-4xl font-semibold">{thisYearBookings.length}</CardTitle>
           </CardHeader>
           <CardContent>
-            {/* <div className="text-sm text-muted-foreground">
-              {lastMonthBookings.length > 0
-                ? `${changeFromPrevious(thisYearBookings.length, lastYearBookings.length)}% from last year`
-                : "No bookings last year"}
-            </div> */}
             <Progress value={thisYearBookings.length} max={2} className='mt-3'/>
           </CardContent>
         </Card>

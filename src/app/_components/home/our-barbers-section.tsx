@@ -95,7 +95,6 @@ export default function OurBarbersCard({
         </CardHeader>
       </Card>
     </div>
-
   );
 }
 
@@ -130,7 +129,6 @@ export function OurBarbersSection(props: { experts: UsersWithoutFilterOptions; s
             <div className="block sm:flex">
               <main className="w-full p-4 pt-0">
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 mx-auto max-w-7xl">
-                  {!query && props.signedOut}
                   {experts.length &&
                     experts.map(({ username, name, id, costPerHairCut }) => (
                       <OurBarbersCard
@@ -139,7 +137,6 @@ export function OurBarbersSection(props: { experts: UsersWithoutFilterOptions; s
                         userId={id ?? ""}
                         title={name ?? "Your title"}
                         query={query ?? undefined}
-                       
                         costPerHairCut={costPerHairCut}
                       />
                     ))}

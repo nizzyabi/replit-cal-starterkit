@@ -1,6 +1,3 @@
-import { motion } from "framer-motion";
-
-
 export const Testimonials = () => {
 
   const barberTestimonials = [
@@ -48,12 +45,9 @@ export const Testimonials = () => {
   };
   
   return (
-    <motion.section
+    <section
       className="mt-4 text-center"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
-      variants={fadeInUpVariants}>
+      >
       <h2 className="text-6xl font-semibold">Testimonials</h2>
       <p className='opacity-60 text-lg mb-12'>See what our clients say about us</p>
       {/* <motion.div
@@ -99,21 +93,15 @@ export const Testimonials = () => {
           <p className="text-sm uppercase tracking-wide">Years Open</p>
         </motion.div>
       </motion.div> */}
-      <motion.div
+      <div
         className="mx-auto mt-12 grid max-w-7xl gap-8 px-4 sm:grid-cols-2 lg:grid-cols-3"
-        variants={{
-          hidden: { opacity: 0 },
-          visible: {
-            opacity: 1,
-            transition: { staggerChildren: 0.1 },
-          },
-        }}
+        
       >
         {barberTestimonials.map((testimonial, index) => (
-          <motion.div
+          <div
             key={index}
             className="flex flex-col justify-between bg-card rounded-lg border p-6 shadow-sm"
-            variants={fadeInUpVariants}
+            
           >
             <div className="flex-grow">
               <p className="mb-4 text-lg italic opacity-60">&quot;{testimonial.quote}&quot;</p>
@@ -129,11 +117,11 @@ export const Testimonials = () => {
                 <p className="text-sm text-gray-500">{testimonial.type}</p>
               </div>
             </div>
-          </motion.div>
+          </div>
         ))}
-      </motion.div>
+      </div>
 
 
-    </motion.section>
+    </section>
   )
 }

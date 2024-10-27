@@ -1,6 +1,5 @@
 import { UserAvatar } from "./user-avatar";
 import { ButtonSubmit } from "@/app/_components/submit-button";
-import { Logo } from "@/app/_components/universal/logo";
 import { SignedIn, signOut } from "@/auth";
 import { Button } from "@/components/ui/button";
 import {

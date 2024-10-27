@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+
 import {
   Calendar,
   Mail,
@@ -14,13 +14,9 @@ export const Location = () => {
   };
   
   return (
-    <motion.section
+    <section
       className="px-8 py-12 lg:px-0"
-      id="location"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
-      variants={fadeInUpVariants}>
+      id="location">
       <h2 className="text-center text-6xl font-semibold">Location</h2>
       <p className="opacity-60 text-lg mb-8 text-center">Come get your haircut today!</p>
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-center gap-8 md:flex-row">
@@ -52,6 +48,6 @@ export const Location = () => {
           </div>
         </div>
       </div>
-    </motion.section>
+    </section>
   )
 }

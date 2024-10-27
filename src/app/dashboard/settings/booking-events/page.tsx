@@ -3,9 +3,8 @@ import { EventTypeDelete } from "./event-type-delete";
 import { ButtonSubmit } from "@/app/_components/submit-button";
 import { auth } from "@/auth";
 import { cal } from "@/cal/api";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -22,8 +21,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { MoreHorizontal, PlusCircle, Video } from "lucide-react";
 import { Fragment } from "react";
 
 export default async function DashboardSettingsBookingEvents() {
@@ -31,48 +28,37 @@ export default async function DashboardSettingsBookingEvents() {
   if (!sesh?.user.id) {
     return <div>Not logged in</div>;
   }
+
   const getEventTypes = await cal({ user: { id: sesh?.user.id } }).get("/v2/event-types");
   if (getEventTypes.status === "error") {
     console.error("[dashboard/settings/booking-events/page.tsx] Error fetching event types", getEventTypes);
   }
-  const eventTypes = getEventTypes?.data?.eventTypeGroups?.flatMap((group) => group.eventTypes) ?? [
-    {
-      length: 60,
-      slug: "60min",
-      title: "60min",
-      description: "A 60 minute session",
-      locations: [
-        {
-          type: "location",
-          link: "https://cal.com/locations/1",
-        },
-      ],
-      id: 1,
-    },
-    {
-      length: 30,
-      slug: "30min",
-      title: "30min",
-      description: "A 30 minute session",
-      locations: [
-        {
-          type: "location",
-          link: "https://cal.com/locations/1",
-        },
-      ],
-      id: 2,
-    },
-  ];
+
+  console.log("Raw API Response:", getEventTypes);
+
+  // Get all event types from all groups
+  const allEventTypes = getEventTypes?.data?.eventTypeGroups?.flatMap((group) => group.eventTypes) ?? [];
+  console.log("All Event Types:", allEventTypes);
+
+  // Get the first 4 event types (these are the default ones we want to hide)
+  const firstFourIds = allEventTypes.slice(0, 4).map(et => et.id);
+  console.log("First Four IDs:", firstFourIds);
+
+  // Filter out the first 4 event types
+  const customEventTypes = allEventTypes.filter(eventType => !firstFourIds.includes(eventType.id));
+  console.log("Custom Event Types:", customEventTypes);
 
   return (
     <Fragment>
       <h1 className="text-3xl font-bold">Manage Booking Events</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {eventTypes.map((eventType) => (
+        {customEventTypes.map((eventType) => (
           <Card key={eventType.id}>
             <CardHeader>
               <CardTitle className='flex items-center justify-between'>
-                <p>{eventType.title}</p>
+                <div>
+                  <p className="text-lg">{eventType.title}</p>
+                </div>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button>
@@ -85,14 +71,11 @@ export default async function DashboardSettingsBookingEvents() {
                   </DropdownMenuContent>
                 </DropdownMenu>
               </CardTitle>
-              
             </CardHeader>
-            
-            
           </Card>
         ))}
       </div>
-      <div className="flex items-center">
+      <div className="flex items-center mt-6">
         <div className="mr-auto flex items-center gap-2">
           <Dialog>
             <DialogTrigger asChild>

@@ -1,13 +1,6 @@
 "use client";
 
-import ConnectCalendarStep from "./connect-calendar-step";
 import UserDetailsStep from "./user-details-step";
-import { Step, Stepper, type StepItem } from "@/components/ui/stepper";
-
-const steps = [
-  { id: "connect-calendar", label: "Step 1" },
-  { id: "avatar-and-bio", label: "Step 2" },
-] satisfies StepItem[];
 
 const GettingStarted = ({
   userId,

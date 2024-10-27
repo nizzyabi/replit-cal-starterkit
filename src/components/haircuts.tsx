@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+
 
 const haircuts = [
   {
@@ -39,28 +39,18 @@ export const Haircuts = () => {
   };
   
   return (
-    <motion.section
-      className="mt-4 text-center"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
-      variants={fadeInUpVariants}>
+    <section
+      className="mt-4 text-center">
       <h2 className=" text-6xl font-semibold">Haircuts</h2>
       <p className='opacity-60 text-lg mb-8'>Checkout some of our most popular harcuts!</p>
-      <motion.div
+      <div
         className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-4 lg:grid-cols-4"
-        variants={{
-          hidden: { opacity: 0 },
-          visible: {
-            opacity: 1,
-            transition: { staggerChildren: 0.1 },
-          },
-        }}>
+        >
         {haircuts.map((haircut, index) => (
-          <motion.div
+          <div
             key={index}
             className="overflow-hidden rounded-lg shadow-lg bg-card hover:shadow-xl transition-shadow duration-300 ease-in-out border"
-            variants={fadeInUpVariants}
+            
           >
             <img
               src={haircut.image}
@@ -71,11 +61,11 @@ export const Haircuts = () => {
               <h3 className="text-xl font-semibold">{haircut.name}</h3>
               <p className="opacity-40 text-sm">{haircut.description}</p>
             </div>
-          </motion.div>
+          </div>
         ))}
 
 
-      </motion.div>
-    </motion.section>
+      </div>
+    </section>
   )
 }

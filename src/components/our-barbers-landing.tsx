@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import React, { useRef } from "react";
 import { cn } from "@/lib/utils";
 import {
@@ -29,26 +28,17 @@ export const OurBarbersLanding = () => {
   };
   
   return (
-    <motion.section
+    <section
       className="my-4 text-center"
       ref={statsRef}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
-      variants={fadeInUpVariants}>
+      >
       <h2 className="text-6xl font-semibold">Our Barbers</h2>
       <p className='opacity-60 text-lg'>Meet our awesome team of barbers</p>
-      <motion.div
+      <div
         className="mx-auto mt-6 grid max-w-7xl grid-cols-1 gap-4 px-4 sm:grid-cols-2 lg:grid-cols-3 lg:px-0"
-        variants={{
-          hidden: { opacity: 0 },
-          visible: {
-            opacity: 1,
-            transition: { staggerChildren: 0.2 },
-          },
-        }}>
+        >
         {barbers.map((barber, index) => (
-          <motion.div key={index} className="col-span-1 flex" variants={fadeInUpVariants}>
+          <div key={index} className="col-span-1 flex">
             <Card className="mx-auto w-full max-w-md overflow-hidden rounded-lg shadow-sm">
               <div className="relative">
                 <div className={cn("h-[280px] w-full rounded-t-lg transition-all duration-300")}>
@@ -86,10 +76,9 @@ export const OurBarbersLanding = () => {
                 </div>
               </CardHeader>
             </Card>
-          </motion.div>
+          </div>
         ))}
-      </motion.div>
-    </motion.section>
-
+      </div>
+    </section>
   )
 }

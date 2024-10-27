@@ -2,14 +2,12 @@ import SupabaseReactDropzone from "../settings/_components/supabase-react-dropzo
 import { expertEdit } from "@/app/_actions";
 import { ButtonSubmit } from "@/app/_components/submit-button";
 import { Label } from "@/components/ui/label";
-import { useStepper } from "@/components/ui/stepper";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useFormState } from "react-dom";
 import { useState } from "react";
 import SupabaseHaircutDropzone from "../settings/_components/supabase-haircut-dropzone";
-import { Input } from "@/components/ui/input";
 
 type UserDetailsFormState = { error: null | string } | { success: null | string };
 
@@ -19,8 +17,6 @@ const UserDetailsStep = ({ userId }: { userId: string }) => {
   const [userDetailsFormState, dispatch] = useFormState<UserDetailsFormState, FormData>(expertEdit, {
     error: null,
   });
-
-  const { isDisabledStep, prevStep } = useStepper();
 
   const [uploadedHaircutImages, setUploadedHaircutImages] = useState<File[]>([]);
 

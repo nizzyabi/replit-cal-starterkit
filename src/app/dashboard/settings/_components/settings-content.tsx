@@ -10,35 +10,41 @@ export const SettingsContent = () => {
   return (
     <div>
     <h1 className="text-3xl font-bold">Availability Settings</h1>
-    <div className="grid gap-6 [&>div]:rounded-lg [&>div]:border [&>div]:border-slate-100/10 [&>div]:bg-card [&>div]:text-white [&>div]:shadow-sm mt-4">
+    <div className="grid gap-6 [&>div]:text-white [&>div]:shadow-sm mt-4">
 
       <AvailabilitySettings
-
         customClassNames={{
-          // this is to avoid layout shift when toggling days
-          ctaClassName: "!text-black",
-          scheduleClassNames: {
-            scheduleDay: "min-w-[480px] !text-black",
+          containerClassName: "!bg-[#0C0A09] !text-white !border border-orange-500/30 rounded-xl shadow-md", 
+          ctaClassName: "border border-orange-500/30 p-4 rounded-xl text-white shadow-md", 
+          editableHeadingClassName: "text-white text-3xl font-bold mb-2", 
+          subtitlesClassName: "text-gray-400 mt-1", 
+          formClassName: "bg-[#0C0A09] text-white p-6 rounded-lg shadow-lg",
+          
+          // Switch styling for native look
+          hiddenSwitchClassname: {
+            container: "switch-container transition-all hover:bg-[#FF9800]", // Only affect background on hover
+            thumb: "switch-thumb hover:shadow-md border rounded-full", // Only add shadow on hover
           },
-          containerClassName: "!font-sans !bg-white !text-black !border !rounded-lg !border-black !p-6",
-          formClassName: '',
-          editableHeadingClassName:
-            "!text-2xl !font-semibold !leading-none !tracking-tight !pr-4 min-w-[20rem]",
-          subtitlesClassName: "!text-sm  !leading-relaxed !max-w-lg",
+
+          timezoneSelectClassName: "text-white bg-gray-800 p-2 rounded-md", 
+
+          scheduleClassNames: {
+            scheduleContainer: "", 
+            
+            scheduleDay: "text-white font-semibold", 
+            timeRanges: "text-white", 
+            labelAndSwitchContainer: "flex items-center justify-between p-2 rounded-lg ", 
+          },
+
+          deleteButtonClassname: "bg-red-500 text-white hover:bg-red-600 transition-all rounded-lg p-2 shadow-md hover:shadow-lg",
         }}
-        onUpdateSuccess={() => {
-          console.log("[@calcom/atoms]: Updated successfully");
-        }}
-        onUpdateError={() => {
-          console.log("[@calcom/atoms]: Update error");
-        }}
-        onDeleteError={() => {
-          console.log("[@calcom/atoms]: Deletion error");
-        }}
-        onDeleteSuccess={() => {
-          console.log("[@calcom/atoms]: Deleted successfully");
-        }}
+        onUpdateSuccess={() => console.log("Updated successfully")}
+        onUpdateError={() => console.log("Update error")}
+        onDeleteError={() => console.log("Delete error")}
+        onDeleteSuccess={() => console.log("Deleted successfully")}
       />
+
+
     </div></div>
   );
 };
