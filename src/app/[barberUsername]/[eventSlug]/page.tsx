@@ -8,10 +8,10 @@ export const dynamic = "force-dynamic";
 export default async function BookerPage({
   params,
 }: {
-  params: { expertUsername: string; eventSlug: string };
+  params: { barberUsername: string; eventSlug: string };
 }) {
   const barber = await db.user.findUnique({
-    where: { username: params.expertUsername },
+    where: { username: params.barberUsername },
     select: {
       id: true,
       calAccessToken: true,
@@ -28,7 +28,7 @@ export default async function BookerPage({
     },
   });
   if (!barber?.calAccount?.username) {
-    console.warn("Barber not found", params.expertUsername);
+    console.warn("Barber not found", params.barberUsername);
     return <div>Barber not found</div>;
   }
   const eventType = await cal({
