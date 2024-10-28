@@ -2,23 +2,19 @@
 
 import { Booker, useEventTypes } from "@calcom/atoms";
 import type { CalAccount, User } from "@prisma/client";
-import { Loader, MapPinIcon } from "lucide-react";
+import { Loader } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 
-/**
- * [@calcom] Make sure to wrap your app with our `CalProvider` to enable the use of our hooks.
- * @link https://cal.com/docs/platform/quick-start#5.3-setup-root-of-your-app
- */
 type BookerProps = Parameters<typeof Booker>[number];
-export const ExpertBooker = (
+export const BarberBooker = (
   props: {
     className?: string;
     calAccount: Pick<CalAccount, "username">;
-    expert: Pick<User, "name" | "username">;
+    barber: Pick<User, "name" | "username">;
   } & Partial<BookerProps>
 ) => {
-  const { className, calAccount, expert, isTeamEvent, ...rest } = props;
+  const { className, calAccount, barber, isTeamEvent, ...rest } = props;
   const router = useRouter();
   const searchParams = useSearchParams();
   const eventSlug = searchParams.get("eventSlug");
@@ -36,7 +32,7 @@ export const ExpertBooker = (
   }
   if (!eventTypes?.length) {
     return (
-      <div className="w-full text-center">Sorry. Unable to load ${expert.name}&apos;s availabilities.</div>
+      <div className="w-full text-center">Sorry. Unable to load ${barber.name}&apos;s availabilities.</div>
     );
   }
 
@@ -46,7 +42,6 @@ export const ExpertBooker = (
         locationUrl='25 Carbery Drive'
         customClassNames={{
           // Main containers
-          atomsWrapper: "",
           bookerContainer: "!bg-[#0C0A09] !border !border-solid !border-orange-500/30 !rounded-lg custom-grid !text-white",
           datePickerCustomClassNames: {
             datePickerDatesActive: "!bg-orange-500 hover:opacity-80 !text-white",
@@ -69,7 +64,7 @@ export const ExpertBooker = (
         onCreateBookingSuccess={(booking) => {
           toast.success("Booking successful!");
           router.push(
-            `/${expert.username}/booking/${booking.data.uid}${booking.data.fromReschedule ? `?${new URLSearchParams({ fromReschedule: booking.data.fromReschedule }).toString()}` : ""}`
+            `/${barber.username}/booking/${booking.data.uid}${booking.data.fromReschedule ? `?${new URLSearchParams({ fromReschedule: booking.data.fromReschedule }).toString()}` : ""}`
           );
         }}
         rescheduleUid={rescheduleUid}
@@ -78,4 +73,4 @@ export const ExpertBooker = (
     </>
   );
 };
-export default ExpertBooker;
+export default BarberBooker;

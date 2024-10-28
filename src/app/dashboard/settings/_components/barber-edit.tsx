@@ -1,17 +1,17 @@
 "use client";
 
-import { expertEdit } from "@/app/_actions";
+import { barberEdit } from "@/app/_actions";
 import { ButtonSubmit } from "@/app/_components/submit-button";
 import { CardDescription } from "@/components/ui/card";
 import { Input, type InputProps } from "@/components/ui/input";
 import { Textarea, type TextareaProps } from "@/components/ui/textarea";
 import { useActionState } from "react";
 
-export default function ExpertEditForm(props: InputProps | TextareaProps) {
+export default function BarberEditForm(props: InputProps | TextareaProps) {
   const [state, submitAction, isPendingAction] = useActionState<
     { error: null | string } | { success: null | string },
     FormData
-  >(expertEdit, { error: null }, "/dashboard/settings/profile");
+  >(barberEdit, { error: null }, "/dashboard/settings/profile");
 
   return (
     <form action={submitAction} className="flex flex-col gap-4">
@@ -24,14 +24,6 @@ export default function ExpertEditForm(props: InputProps | TextareaProps) {
       ) : (
         <Input {...(props as InputProps)} disabled={isPendingAction} className="max-w-72"/>
       )}
-      {/* {props.name === "costPerHairCut" && (
-        <Textarea
-          {...(props as TextareaProps)}
-          className="min-w-72 text-balance text-sm leading-relaxed text-muted-foreground"
-          disabled={isPendingAction}
-        />
-      )} */}
-      {/* display action states (pending, idle, success & error) */}
       {isPendingAction ? (
         <CardDescription>Saving...</CardDescription>
       ) : "success" in state && state.success ? (

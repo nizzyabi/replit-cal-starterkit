@@ -8,7 +8,7 @@ export const SignupCard = () => {
       <div>
         <CardHeader>
           <CardTitle className="text-xl">
-            Are you an expert of <span className="font-display">Cal.com</span>?
+            Are you a barber at <span className="font-display">Cal&apos;s Barbershop</span>?
           </CardTitle>
           <CardDescription>
             Sign up, connect your calendar and fill your schedule with exciting customers who need help with

@@ -1,5 +1,5 @@
 import SupabaseReactDropzone from "../settings/_components/supabase-react-dropzone";
-import { expertEdit } from "@/app/_actions";
+import { barberEdit } from "@/app/_actions";
 import { ButtonSubmit } from "@/app/_components/submit-button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -14,7 +14,7 @@ type UserDetailsFormState = { error: null | string } | { success: null | string 
 const UserDetailsStep = ({ userId }: { userId: string }) => {
   const router = useRouter();
 
-  const [userDetailsFormState, dispatch] = useFormState<UserDetailsFormState, FormData>(expertEdit, {
+  const [userDetailsFormState, dispatch] = useFormState<UserDetailsFormState, FormData>(barberEdit, {
     error: null,
   });
 

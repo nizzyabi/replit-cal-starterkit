@@ -9,7 +9,7 @@ export const SearchBar = () => {
   return (
     <div className="w-full max-w-2xl">
       <Input
-        placeholder="Search for your expert, topic or more"
+        placeholder="Search for your barber, topic or more"
         className="h-14 w-full shadow-md"
         defaultValue={query ?? ""}
         onChange={async (e) => {

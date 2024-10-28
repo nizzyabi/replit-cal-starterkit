@@ -13,12 +13,12 @@ import { useParams, useSearchParams } from "next/navigation";
 import type { BookingStatus } from "node_modules/@calcom/atoms/dist/packages/prisma/enums";
 
 export const BookingResult = (props: {
-  expertusername?: string;
+  barberusername?: string;
   bookingUid?: string;
   fromReschedule?: string;
 }) => {
-  const params = useParams<{ expertUsername: string; bookingUid: string }>();
-  const expertUsername = props?.expertusername ?? params.expertUsername;
+  const params = useParams<{ barberUsername: string; bookingUid: string }>();
+  const barberUsername = props?.barberusername ?? params.barberUsername;
   const bookingUid = props?.bookingUid ?? params.bookingUid;
   const searchParams = useSearchParams();
   const fromReschedule = props?.fromReschedule ?? searchParams.get("fromReschedule");
@@ -247,7 +247,7 @@ ${stripCalOAuthClientIdFromEmail(previousAttendee.email)}`
             <span>
               {" "}
               See{" "}
-              <Link href={`/${expertUsername}`} className="underline">
+              <Link href={`/${barberUsername}`} className="underline">
                 availabilities
               </Link>
             </span>
@@ -257,7 +257,7 @@ ${stripCalOAuthClientIdFromEmail(previousAttendee.email)}`
             <span>Need to make changes?</span>
             <span>
               {" "}
-              <Link href={`/${expertUsername}?rescheduleUid=${bookingUid}`} className="underline">
+              <Link href={`/${barberUsername}?rescheduleUid=${bookingUid}`} className="underline">
                 Reschedule
               </Link>{" "}
               or{" "}

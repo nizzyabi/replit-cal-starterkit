@@ -3,7 +3,6 @@
 import { type LoginFormState } from "./login/_components/login";
 import { LoginSchema, SignupSchema, auth, signIn, unstable_update } from "@/auth";
 import { type User } from "@prisma/client";
-import { type Prisma } from "@prisma/client";
 import { AuthError } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { isRedirectError } from "next/dist/client/components/redirect";
@@ -42,62 +41,6 @@ export async function signInWithCredentials(_prevState: LoginFormState, formData
   }
 }
 
-// export async function addUserFilters(_prevState: { error?: string | null }, formData: FormData) {
-//   try {
-//     const sesh = await auth();
-
-//     if (!sesh?.user?.id) return { error: "User not logged in " };
-
-//     const filters = FiltersSchema.safeParse({
-//       categories: formData.get("categories"),
-//       capabilities: formData.get("capabilities"),
-//       frameworks: formData.get("frameworks"),
-//       budgets: formData.get("budgets"),
-//       languages: formData.get("languages"),
-//       regions: formData.get("regions"),
-//     });
-
-//     if (!filters.success) {
-//       return {
-//         inputErrors: filters.error.flatten().fieldErrors,
-//       };
-//     }
-
-//     const selectedFilterOptions = [
-//       { filterOpdtionFieldIds: filters.data.budgets, filterCategoryFieldId: "budgets" },
-//       { filterOpdtionFieldIds: filters.data.capabilities, filterCategoryFieldId: "capabilities" },
-//       { filterOpdtionFieldIds: filters.data.categories, filterCategoryFieldId: "categories" },
-//       { filterOpdtionFieldIds: filters.data.frameworks, filterCategoryFieldId: "frameworks" },
-//       { filterOpdtionFieldIds: filters.data.languages, filterCategoryFieldId: "languages" },
-//     ]
-//       .map(({ filterOpdtionFieldIds, filterCategoryFieldId }) => {
-//         return filterOpdtionFieldIds.map((fieldId) => {
-//           return {
-//             filterCategoryFieldId,
-//             filterOptionFieldId: fieldId,
-//             userId: sesh?.user.id,
-//           };
-//         });
-//       })
-
-//     const data = selectedFilterOptions.flat();
-
-//     const createOrUpdateFilterPromises: Array<Promise<any>> = [];
-
-//     for (const filter of data) {
-//       createOrUpdateFilterPromises.push(
-        
-//       );
-//     }
-
-//     await Promise.all(createOrUpdateFilterPromises);
-
-//     return { success: true };
-//   } catch (err) {
-//     throw err;
-//   }
-// }
-
 export async function signUpWithCredentials(_prevState: { error?: string | null }, formData: FormData) {
   try {
     const credentials = SignupSchema.safeParse({
@@ -132,11 +75,11 @@ export async function signUpWithCredentials(_prevState: { error?: string | null 
   }
 }
 
-export async function expertEdit(
+export async function barberEdit(
   _prevState: { error: null | string } | { success: null | string },
   formData: FormData
 ) {
-  console.log("[_actions] Updating expert with form data: ", formData);
+  console.log("[_actions] Updating barber with form data: ", formData);
   const sesh = await auth();
   if (!sesh?.user.id) {
     console.log("[_actions] Unauthorized user edit", formData);
@@ -173,7 +116,7 @@ export async function expertEdit(
       },
     });
   } catch (error) {
-    console.error("Uncaught error updating expert", error);
+    console.error("Uncaught error updating barber", error);
     return { error: "Internal Server Error" };
   }
   revalidatePath("/dashboard/settings/profile");

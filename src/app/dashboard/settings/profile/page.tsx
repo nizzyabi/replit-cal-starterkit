@@ -1,4 +1,4 @@
-import ExpertEditForm from "../_components/expert-edit";
+import BarberEditForm from "../_components/barber-edit";
 import SupabaseHaircutDropzone from "../_components/supabase-haircut-dropzone";
 import SupabaseReactDropzone from "../_components/supabase-react-dropzone";
 import { currentUser } from "@/auth";
@@ -8,8 +8,8 @@ import { Info } from "lucide-react";
 export const dynamic = "force-dynamic";
 
 export default async function DashboardSettingsProfile() {
-  const expert = await currentUser();
-  if (!expert) {
+  const barber = await currentUser();
+  if (!barber) {
     return <div>Not logged in</div>;
   }
 
@@ -27,12 +27,12 @@ export default async function DashboardSettingsProfile() {
               {/* Name Section */}
               <div className="space-y-2">
                 <h3 className="text-sm font-medium text-gray-300">Name</h3>
-                <ExpertEditForm id="name" name="name" placeholder={expert.name ?? "Your name"} />
+                <BarberEditForm id="name" name="name" placeholder={barber.name ?? "Your name"} />
               </div>
               {/* Bio Section */}
               <div className="space-y-2">
                 <h3 className="text-sm font-medium text-gray-300">Bio</h3>
-                <ExpertEditForm id="bio" name="bio" placeholder={expert.bio ?? "Your Bio"} />
+                <BarberEditForm id="bio" name="bio" placeholder={barber.bio ?? "Your Bio"} />
               </div>
             </CardContent>
           </Card>
@@ -46,7 +46,7 @@ export default async function DashboardSettingsProfile() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <SupabaseReactDropzone userId={expert.id} />
+              <SupabaseReactDropzone userId={barber.id} />
             </CardContent>
             <CardFooter className="border-t px-6 py-6 text-gray-400">
               <CardDescription className="flex items-center gap-1">
@@ -66,7 +66,7 @@ export default async function DashboardSettingsProfile() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <SupabaseHaircutDropzone userId={expert.id} />
+            <SupabaseHaircutDropzone userId={barber.id} />
           </CardContent>
           <CardFooter className="border-t px-6 py-6 text-gray-400">
             <CardDescription className="flex items-center gap-1">

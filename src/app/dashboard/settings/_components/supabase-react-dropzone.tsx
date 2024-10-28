@@ -69,7 +69,7 @@ export default function SupabaseReactDropzone({ userId }: { userId: string; user
         <Skeleton className="aspect-square size-16 rounded-md" />
       ) : (
         <Image
-          alt="Expert image"
+          alt="Barber image"
           className="aspect-square rounded-md object-cover"
           src={avatar}
           height="64"

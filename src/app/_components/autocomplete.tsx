@@ -63,7 +63,7 @@ export const AutocompleteSearch = forwardRef<HTMLDivElement, AutocompleteSearchP
           {...props}>
           <CommandInput
             value={query}
-            placeholder="Search an expert..."
+            placeholder="Search a barber..."
             onFocus={() => {
               setOpen(true);
               if (query === options.find((option) => option.value === value)?.label) {
@@ -82,7 +82,7 @@ export const AutocompleteSearch = forwardRef<HTMLDivElement, AutocompleteSearchP
                   "absolute left-0 right-0 top-full rounded-b-md bg-background p-0 shadow !duration-150 data-[open=true]:animate-in data-[open=true]:fade-in",
                   placement === "header" && "border-x border-b"
                 )}>
-                <CommandEmpty>No expert found.</CommandEmpty>
+                <CommandEmpty>No barber found.</CommandEmpty>
                 <CommandGroup>
                   {options.map((option) => (
                     <CommandItem
@@ -94,7 +94,7 @@ export const AutocompleteSearch = forwardRef<HTMLDivElement, AutocompleteSearchP
 
                         setOpen(false);
 
-                        router.push(`/experts?${new URLSearchParams({ q: newValue }).toString()}`, {
+                        router.push(`/barbers?${new URLSearchParams({ q: newValue }).toString()}`, {
                           scroll: false,
                         });
                       }}>

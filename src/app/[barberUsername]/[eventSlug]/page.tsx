@@ -1,4 +1,4 @@
-import ExpertBooker from "../_components/expert-booker";
+import BarberBooker from "../_components/barber-booker";
 import { cal } from "@/cal/api";
 import Image from "next/image";
 import { db } from "prisma/client";
@@ -10,7 +10,7 @@ export default async function BookerPage({
 }: {
   params: { expertUsername: string; eventSlug: string };
 }) {
-  const expert = await db.user.findUnique({
+  const barber = await db.user.findUnique({
     where: { username: params.expertUsername },
     select: {
       id: true,
@@ -27,20 +27,20 @@ export default async function BookerPage({
       },
     },
   });
-  if (!expert?.calAccount?.username) {
-    console.warn("Expert not found", params.expertUsername);
-    return <div>Expert not found</div>;
+  if (!barber?.calAccount?.username) {
+    console.warn("Barber not found", params.expertUsername);
+    return <div>Barber not found</div>;
   }
   const eventType = await cal({
     user: {
-      calAccessToken: expert.calAccessToken,
-      calRefreshToken: expert.calRefreshToken,
-      calAccountId: expert.calAccountId,
-      id: expert.id,
+      calAccessToken: barber.calAccessToken,
+      calRefreshToken: barber.calRefreshToken,
+      calAccountId: barber.calAccountId,
+      id: barber.id,
     },
   }).get("/v2/event-types/{username}/{eventSlug}/public", {
     path: {
-      username: expert.calAccount.username,
+      username: barber.calAccount.username,
       eventSlug: params.eventSlug,
     },
     query: {
@@ -60,27 +60,27 @@ export default async function BookerPage({
       <header className="flex w-full flex-col justify-between gap-4 rounded-md bg-muted/50 px-8 py-4  sm:px-10 lg:flex-row lg:px-12 2xl:px-36">
         <div className="flex items-center gap-x-6">
           <Image
-            alt="Expert image"
+            alt="Barber image"
             className="aspect-square rounded-md object-cover"
-            src={`avatars/${expert.id}`}
+            src={`avatars/${barber.id}`}
             height="64"
             width="64"
           />
           <div className="space-y-2">
             <h1 className="text-2xl font-semibold capitalize leading-none tracking-tight">
-              {expert.name}: {eventType.data?.title}
+              {barber.name}: {eventType.data?.title}
             </h1>
             <p className="text-sm text-muted-foreground">{descriptionWithoutHtmlTags}</p>
           </div>
         </div>
       </header>
       <div className="mx-auto mt-4 grid w-full gap-2 px-8 sm:px-10 lg:px-12 2xl:px-36 bg-transparent">
-        {Boolean(expert.calAccount) && (
-          <ExpertBooker
-            calAccount={{ username: expert.calAccount.username }}
-            expert={{
-              name: expert.name,
-              username: expert.username,
+        {Boolean(barber.calAccount) && (
+          <BarberBooker
+            calAccount={{ username: barber.calAccount.username }}
+            barber={{
+              name: barber.name,
+              username: barber.username,
             }}
             eventSlug={eventType.data?.slug}
           />

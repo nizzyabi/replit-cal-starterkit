@@ -21,8 +21,6 @@ export default function OurBarbersCard({
   userId?: string;
   title: string;
   query?: string;
-  
-  costPerHairCut: any;
 }) {
   const queryIndexTitle = title.toLowerCase().indexOf(query?.toLowerCase() ?? "");
   const [error, setError] = useState<Error | null>(null);
@@ -100,14 +98,14 @@ export default function OurBarbersCard({
 
 type UsersWithoutFilterOptions = Awaited<ReturnType<typeof db.user.findMany>>;
 
-export function OurBarbersSection(props: { experts: UsersWithoutFilterOptions; signedOut: JSX.Element }) {
+export function OurBarbersSection(props: { barbers: UsersWithoutFilterOptions; signedOut: JSX.Element }) {
   const [query] = useQueryState("q", parseAsString);
 
-  const experts = props.experts.filter((expert) => {
+  const barbers = props.barbers.filter((barber) => {
     if (!query) return true;
     return (
-      expert?.name?.toLowerCase().includes(query?.toLowerCase()) ||
-      expert?.bio?.toLowerCase().includes(query?.toLowerCase())
+      barber?.name?.toLowerCase().includes(query?.toLowerCase()) ||
+      barber?.bio?.toLowerCase().includes(query?.toLowerCase())
     );
   });
 
@@ -129,15 +127,14 @@ export function OurBarbersSection(props: { experts: UsersWithoutFilterOptions; s
             <div className="block sm:flex">
               <main className="w-full p-4 pt-0">
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 mx-auto max-w-7xl">
-                  {experts.length &&
-                    experts.map(({ username, name, id, costPerHairCut }) => (
+                  {barbers.length &&
+                    barbers.map(({ username, name, id }) => (
                       <OurBarbersCard
                         key={username}
                         slug={username ?? ""}
                         userId={id ?? ""}
                         title={name ?? "Your title"}
                         query={query ?? undefined}
-                        costPerHairCut={costPerHairCut}
                       />
                     ))}
                 </div>
