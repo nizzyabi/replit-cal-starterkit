@@ -3,18 +3,38 @@
 @tailwind utilities;
 
 
-button.switch {
-  border: 2px solid #fff; /* White border */
-  border-radius: 9999px; /* This makes the button fully rounded (rounded-full) */
-  padding: 0.5rem 1rem; /* Add some padding to give the button a better shape */
-  background-color: #FF9800; /* Example background color */
-  transition: all 0.3s ease; /* Smooth transition for hover or active states */
+@media (min-width: 768px) {
+    .calcom-atoms .md\:border-l {
+        border-left-width: 1px;
+        border-color: rgba(249, 115, 22, 0.3); 
+    }
 }
 
-/* Optional: Add hover effect for buttons */
+@media (min-width: 768px) {
+    .calcom-atoms .md\:border-r {
+        border-left-width: 1px;
+        border-color: rgba(249, 115, 22, 0.3);
+    }
+}
+
+.calcom-atoms .space-y-4>:not([hidden])~:not([hidden]) {
+    --tw-space-y-reverse: 0;
+    margin-top: calc(1rem*(1 - var(--tw-space-y-reverse)));
+    margin-bottom: calc(1rem* var(--tw-space-y-reverse));
+}
+
+
+button.switch {
+  border: 2px solid #fff; 
+  border-radius: 9999px;
+  padding: 0.5rem 1rem; 
+  background-color: #FF9800; 
+  transition: all 0.3s ease; 
+}
+
 button.switch:hover {
-  background-color: #FFB74D; /* Lighten the background on hover */
-  border-color: #FF9800; /* Change border color on hover */
+  background-color: #FFB74D;
+  border-color: #FF9800;
 }
 
 .calcom-atoms .hover\:border-default:hover {
@@ -35,18 +55,18 @@ button.switch:hover {
 .switch-container {
   width: 2.5rem;
   height: 1.25rem;
-  background-color: #666; /* Default background */
+  background-color: #666; 
   border-radius: 999px;
   position: relative;
   transition: background-color 0.3s ease;
 }
 
 .switch-container:hover {
-  background-color: #FF9800; /* Only change background color on hover */
+  background-color: #FF9800; 
 }
 
 .switch-container.on {
-  background-color: #FF9800; /* On state */
+  background-color: #FF9800; 
 }
 
 .switch-thumb {
@@ -61,13 +81,12 @@ button.switch:hover {
 }
 
 .switch-container.on .switch-thumb {
-  transform: translateX(1.25rem); /* Thumb moves when "on" */
+  transform: translateX(1.25rem);
 }
 
 .switch-thumb:hover {
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add a subtle shadow on hover for the thumb */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
-
 
 .calcom-atoms {
   background-color: transparent;
@@ -103,17 +122,17 @@ button.switch:hover {
 }
 
 .calcom-atoms .aria-checked\:bg-emphasis[aria-checked=true] {
-  background-color: orange;
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 .calcom-atoms .bg-brand-default {
-  background-color: orange;
+  background-color: rgba(249, 115, 21, 0.4);
 }
 
 .current-timezone::before {
   content: "";
   opacity: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* Adjust the color and transparency as needed */
+  background-color: rgba(0, 0, 0, 0.5);
   transition: opacity 0.2s ease;
 }
 
@@ -128,7 +147,7 @@ button.switch:hover {
 
 @layer base {
   :root {
-    --background: 240 2% 8.5%; /* #151518 */
+    --background: 240 2% 8.5%;
     --foreground: 60 9.1% 97.8%;
     --card: 20 14.3% 4.1%;
     --card-foreground: 60 9.1% 97.8%;

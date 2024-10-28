@@ -1,13 +1,15 @@
 # Cal.com Barbershop Example App for Replit
 
 <div align="center">
-  <img src="https://github.com/calcom/platform-starter-kit/assets/8019099/6f0a8337-6d18-42de-aa00-44a57764e19b" alt="Cal.com Barbershop Logo">
+   <img src="https://cal.com/android-chrome-512x512.png" alt="Cal.com Barbershop Logo" width="100" height="100">
+
 
   Build your own booking system for a barbershop using Cal.com's platform!
   
-  [View Demo](https://experts.cal.com) · 
+  [View Demo](url here) · 
   [Watch Tutorial](https://www.youtube.com/watch?v=wwo07ghiNn4) · 
-  [Read Docs](https://cal.com/docs/platform)
+  [Read Cal.com Docs](https://cal.com/docs/platform)
+  
 </div>
 
 ## 🚀 Quick Start
@@ -16,7 +18,7 @@
 2. **Set up your database:**
    - Create a free Supabase project at [database.new](https://database.new)
    - Copy your database URLs from the [Supabase dashboard](https://supabase.com/dashboard/project/_/settings/database)
-   - Create an `avatars` bucket in Supabase for profile pictures
+   - Create an `avatars` bucket in Supabase for profile pictures (make sure it's public so you can store images)
 
 3. **Set up your environment:**
    - Click on the 🔒 Secrets (Environment Variables) tab in your Repl
@@ -27,19 +29,11 @@
      POSTGRES_URL_NON_POOLING=your_connection_string_here
      ```
 
-4. **Initialize your database:**
-   - Open the Shell in Replit
-   - Run these commands:
-     ```bash
-     pnpm db:init
-     pnpm db:seed
-     ```
-
-5. **Generate an auth secret:**
+4. **Generate an auth secret:**
    - In the Shell, run: `openssl rand -hex 32`
    - Add the output to your Secrets as `AUTH_SECRET`
 
-6. **Start coding!**
+5. **Start coding!**
    - Click the Run button ▶️
    - Your app should now be live!
 
@@ -66,9 +60,9 @@
   pnpm add package-name
 
   # Run database migrations
-  pnpm db:push
+  npx prisma db push
   ```
-
+  
 ## 🆘 Need Help?
 
 - Ask us on [Twitter](https://x.com/calcom)

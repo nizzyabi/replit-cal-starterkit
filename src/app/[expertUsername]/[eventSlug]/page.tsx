@@ -83,7 +83,6 @@ export default async function BookerPage({
               username: expert.username,
             }}
             eventSlug={eventType.data?.slug}
-            
           />
         )}
       </div>

@@ -32,7 +32,7 @@ export default function OurBarbersCard({
   useEffect(() => {
     // Generate a random rating between 4.0 and 5.0
     const rating = (Math.random() * 1 + 4).toFixed(1);
-    setRandomRating(rating);
+    setRandomRating(rating ? parseFloat(rating) : 4.4);
   }, []);
   
   return (

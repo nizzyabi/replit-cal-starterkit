@@ -1,7 +1,7 @@
 "use server";
 
 import { type LoginFormState } from "./login/_components/login";
-import { LoginSchema, SignupSchema, auth, signIn, unstable_update, FiltersSchema } from "@/auth";
+import { LoginSchema, SignupSchema, auth, signIn, unstable_update } from "@/auth";
 import { type User } from "@prisma/client";
 import { type Prisma } from "@prisma/client";
 import { AuthError } from "next-auth";
@@ -42,61 +42,61 @@ export async function signInWithCredentials(_prevState: LoginFormState, formData
   }
 }
 
-export async function addUserFilters(_prevState: { error?: string | null }, formData: FormData) {
-  try {
-    const sesh = await auth();
+// export async function addUserFilters(_prevState: { error?: string | null }, formData: FormData) {
+//   try {
+//     const sesh = await auth();
 
-    if (!sesh?.user?.id) return { error: "User not logged in " };
+//     if (!sesh?.user?.id) return { error: "User not logged in " };
 
-    const filters = FiltersSchema.safeParse({
-      categories: formData.get("categories"),
-      capabilities: formData.get("capabilities"),
-      frameworks: formData.get("frameworks"),
-      budgets: formData.get("budgets"),
-      languages: formData.get("languages"),
-      regions: formData.get("regions"),
-    });
+//     const filters = FiltersSchema.safeParse({
+//       categories: formData.get("categories"),
+//       capabilities: formData.get("capabilities"),
+//       frameworks: formData.get("frameworks"),
+//       budgets: formData.get("budgets"),
+//       languages: formData.get("languages"),
+//       regions: formData.get("regions"),
+//     });
 
-    if (!filters.success) {
-      return {
-        inputErrors: filters.error.flatten().fieldErrors,
-      };
-    }
+//     if (!filters.success) {
+//       return {
+//         inputErrors: filters.error.flatten().fieldErrors,
+//       };
+//     }
 
-    const selectedFilterOptions = [
-      { filterOpdtionFieldIds: filters.data.budgets, filterCategoryFieldId: "budgets" },
-      { filterOpdtionFieldIds: filters.data.capabilities, filterCategoryFieldId: "capabilities" },
-      { filterOpdtionFieldIds: filters.data.categories, filterCategoryFieldId: "categories" },
-      { filterOpdtionFieldIds: filters.data.frameworks, filterCategoryFieldId: "frameworks" },
-      { filterOpdtionFieldIds: filters.data.languages, filterCategoryFieldId: "languages" },
-    ]
-      .map(({ filterOpdtionFieldIds, filterCategoryFieldId }) => {
-        return filterOpdtionFieldIds.map((fieldId) => {
-          return {
-            filterCategoryFieldId,
-            filterOptionFieldId: fieldId,
-            userId: sesh?.user.id,
-          };
-        });
-      })
+//     const selectedFilterOptions = [
+//       { filterOpdtionFieldIds: filters.data.budgets, filterCategoryFieldId: "budgets" },
+//       { filterOpdtionFieldIds: filters.data.capabilities, filterCategoryFieldId: "capabilities" },
+//       { filterOpdtionFieldIds: filters.data.categories, filterCategoryFieldId: "categories" },
+//       { filterOpdtionFieldIds: filters.data.frameworks, filterCategoryFieldId: "frameworks" },
+//       { filterOpdtionFieldIds: filters.data.languages, filterCategoryFieldId: "languages" },
+//     ]
+//       .map(({ filterOpdtionFieldIds, filterCategoryFieldId }) => {
+//         return filterOpdtionFieldIds.map((fieldId) => {
+//           return {
+//             filterCategoryFieldId,
+//             filterOptionFieldId: fieldId,
+//             userId: sesh?.user.id,
+//           };
+//         });
+//       })
 
-    const data = selectedFilterOptions.flat();
+//     const data = selectedFilterOptions.flat();
 
-    const createOrUpdateFilterPromises: Array<Promise<any>> = [];
+//     const createOrUpdateFilterPromises: Array<Promise<any>> = [];
 
-    for (const filter of data) {
-      createOrUpdateFilterPromises.push(
+//     for (const filter of data) {
+//       createOrUpdateFilterPromises.push(
         
-      );
-    }
+//       );
+//     }
 
-    await Promise.all(createOrUpdateFilterPromises);
+//     await Promise.all(createOrUpdateFilterPromises);
 
-    return { success: true };
-  } catch (err) {
-    throw err;
-  }
-}
+//     return { success: true };
+//   } catch (err) {
+//     throw err;
+//   }
+// }
 
 export async function signUpWithCredentials(_prevState: { error?: string | null }, formData: FormData) {
   try {

@@ -6,27 +6,27 @@ import React, { useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { env } from "@/env";
 import { cn } from "@/lib/utils";
+import { X } from "lucide-react";
 
 export default function SupabaseHaircutDropzone({ userId }: { userId: string }) {
   const [haircuts, setHaircuts] = useState<string[]>([]);
   const [status, setStatus] = useState<"idle" | "loading" | "error" | "success">("idle");
-
-  const supabaseBrowserClient = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+  const supabaseBrowserClient = createClient(
+    env.NEXT_PUBLIC_SUPABASE_URL,
+    env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  );
 
   useEffect(() => {
-    // Fetch existing haircut images for the barber
     const fetchHaircuts = async () => {
       const { data, error } = await supabaseBrowserClient.storage
         .from("haircuts")
         .list(`${userId}/`);
-
       if (data) {
         setHaircuts(data.map(file => `haircuts/${userId}/${file.name}`));
       } else if (error) {
         console.error("Error fetching haircuts:", error);
       }
     };
-
     fetchHaircuts().catch(error => {
       console.error("Error in fetchHaircuts:", error);
     });
@@ -40,13 +40,11 @@ export default function SupabaseHaircutDropzone({ userId }: { userId: string }) 
     },
     onDropAccepted: async (acceptedFiles) => {
       setStatus("loading");
-
       try {
         for (const file of acceptedFiles) {
           const { data, error } = await supabaseBrowserClient.storage
             .from("haircuts")
             .upload(`${userId}/${file.name}`, file);
-
           if (data) {
             setHaircuts(prev => [...prev, `haircuts/${userId}/${file.name}`]);
           } else if (error) {
@@ -61,45 +59,47 @@ export default function SupabaseHaircutDropzone({ userId }: { userId: string }) 
     },
   });
 
-  // Delete handler to remove the image
   const handleDelete = async (fileName: string) => {
     const { error } = await supabaseBrowserClient.storage
       .from("haircuts")
       .remove([`${userId}/${fileName}`]);
-
     if (error) {
       console.error("Error deleting file:", error);
     } else {
-      // Remove the deleted image from the state
       setHaircuts((prev) => prev.filter((image) => image !== `haircuts/${userId}/${fileName}`));
     }
   };
 
   return (
-    <div className="mx-auto grid w-full gap-4">
-      <div className="grid grid-cols-4 gap-2">
+    <div className="mx-auto w-full space-y-4">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
         {haircuts.map((haircut, index) => {
-          const fileName = haircut.split("/").pop(); // Get the file name for deletion
+          const fileName = haircut.split("/").pop();
           return (
-            <div key={index} className="relative group">
-              <Image
-                alt={`Haircut ${index + 1}`}
-                className="aspect-square rounded-md object-cover shadow-sm"
-                src={haircut}
-                height="200"
-                width="200"
-              />
-              {/* Delete Button */}
-              <button
-                type="button"
-                className="absolute top-2 right-24 bg-red-600 text-white px-2 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                onClick={() => handleDelete(fileName!)}>
-                ✕
-              </button>
+            <div key={index} className="group relative aspect-square overflow-hidden rounded-lg">
+              <div className="relative h-full w-full">
+                <Image
+                  alt={`Haircut ${index + 1}`}
+                  src={haircut}
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+                />
+                <div className="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <button
+                    type="button"
+                    onClick={() => handleDelete(fileName!)}
+                    className="absolute right-2 top-2 rounded-full bg-red-600 p-1.5 text-white shadow-lg transition-transform hover:bg-red-700 hover:scale-110"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
             </div>
           );
         })}
       </div>
+
       <div
         {...getRootProps({
           className: cn(
