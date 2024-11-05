@@ -34,6 +34,11 @@ export default async function DashboardSettingsProfile() {
                 <h3 className="text-sm font-medium text-gray-300">Bio</h3>
                 <BarberEditForm id="bio" name="bio" placeholder={barber.bio ?? "Your Bio"} />
               </div>
+
+              <div className="space-y-2">
+                <h3 className="text-sm font-medium text-gray-300">Cost per haircut</h3>
+                <BarberEditForm id="costPerHairCut" name="costPerHairCut" placeholder={barber.costPerHairCut ?? "Cost per haircut"} />
+              </div>
             </CardContent>
           </Card>
 

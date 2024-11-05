@@ -85,43 +85,61 @@ export async function barberEdit(
     console.log("[_actions] Unauthorized user edit", formData);
     return { error: "Unauthorized" };
   }
+
   const formDataWithoutActionFields = Object.fromEntries(
     Array.from(formData.entries()).filter(([key]) => !key.toLowerCase().startsWith("$action"))
   );
+
+  // Updated schema to handle all possible form fields
   const userEdit = z
     .object({
       name: z.string().min(1).max(255),
     })
-    .or(z.object({ bio: z.string().min(1).max(255)}))
+    .or(z.object({ bio: z.string().min(1).max(255) }))
+    .or(z.object({ 
+      costPerHairCut: z.string()
+        .transform((val) => {
+          const parsed = parseInt(val, 10);
+          if (isNaN(parsed)) throw new Error("Invalid number");
+          return parsed;
+        })
+        .refine((val) => val > 0 && val <= 500, {
+          message: "Cost must be between 1 and 500"
+        })
+    }))
     .safeParse(formDataWithoutActionFields);
 
   if (!userEdit.success) {
-    console.log("[_actions] Inavlid form data", formData);
+    console.log("[_actions] Invalid form data", userEdit.error);
     return { error: "Invalid form data" };
   }
 
-  const key = Object.keys(userEdit.data)[0];
+  const key = Object.keys(userEdit.data)[0] as keyof typeof userEdit.data;
   if (!key) {
     console.error("[_actions] Invalid form data", formData);
     return { error: "Invalid form data" };
   }
+
   let user: User | null;
   try {
     user = await db.user.update({
       where: { id: sesh.user.id },
       data: {
-        // @ts-expect-error - key as "name" | "bio" didn't work -- not sure why
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         [key]: userEdit.data[key],
       },
     });
+
+    revalidatePath("/dashboard/settings/profile");
+    await unstable_update({ user: { name: user.name } });
+
+    // Customize success message based on the field being updated
+    const successMessage = key === 'costPerHairCut'
+      ? `Successfully updated your cost per haircut to: $${userEdit.data[key]}`
+      : `Successfully updated your ${key} to: '${userEdit.data[key]}'`;
+
+    return { success: successMessage };
   } catch (error) {
     console.error("Uncaught error updating barber", error);
     return { error: "Internal Server Error" };
   }
-  revalidatePath("/dashboard/settings/profile");
-  await unstable_update({ user: { name: user.name } });
-
-  // @ts-expect-error - key as "name" | "bio" didn't work -- not sure why
-  return { success: `Successfully updated your ${key} to: '${userEdit.data[key]}'.` };
 }

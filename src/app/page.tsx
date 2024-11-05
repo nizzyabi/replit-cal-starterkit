@@ -6,6 +6,7 @@ import { Testimonials } from "@/components/testimonials";
 import { Navbar } from "@/components/navbar";
 import { OurBarbersLanding } from "@/components/our-barbers-landing";
 import { Location } from "@/components/location";
+import { Footer } from "@/components/footer";
 import React from "react";
 
 export default function Home() {
@@ -22,6 +23,7 @@ export default function Home() {
         <Testimonials />
         <Location />
       </main>
+      <Footer />
     </React.Fragment>
   );
 }

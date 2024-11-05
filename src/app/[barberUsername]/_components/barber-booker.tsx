@@ -1,12 +1,13 @@
 "use client";
-
 import { Booker, useEventTypes } from "@calcom/atoms";
 import type { CalAccount, User } from "@prisma/client";
 import { Loader } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
 
 type BookerProps = Parameters<typeof Booker>[number];
+
 export const BarberBooker = (
   props: {
     className?: string;
@@ -20,28 +21,52 @@ export const BarberBooker = (
   const eventSlug = searchParams.get("eventSlug");
   const rescheduleUid = searchParams.get("rescheduleUid") ?? undefined;
   const { isLoading: isLoadingEvents, data: eventTypes } = useEventTypes(calAccount.username ?? "");
+
+  const fadeUpAnimation = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 1.5, ease: "easeOut" }
+  };
+
   if (!calAccount.username) {
-    return <div className="w-full text-center">Sorry. We couldn&apos;t find this barber&apos; user.</div>;
-  }
-  if (isLoadingEvents) {
     return (
-      <div className="flex items-center justify-center">
-        <Loader className="z-50 animate-spin" />
-      </div>
+      <motion.div 
+        className="w-full text-center"
+        {...fadeUpAnimation}
+      >
+        Sorry. We couldn&apos;t find this barber&apos; user.
+      </motion.div>
     );
   }
+
+  if (isLoadingEvents) {
+    return (
+      <motion.div 
+        className="flex items-center justify-center"
+        {...fadeUpAnimation}
+      >
+        <Loader className="z-50 animate-spin" />
+      </motion.div>
+    );
+  }
+
   if (!eventTypes?.length) {
     return (
-      <div className="w-full text-center">Sorry. Unable to load ${barber.name}&apos;s availabilities.</div>
+      <motion.div 
+        className="w-full text-center"
+        {...fadeUpAnimation}
+      >
+        Sorry. Unable to load {barber.name}&apos;s availabilities.
+      </motion.div>
     );
   }
 
   return (
-    <>
+    <motion.div
+      {...fadeUpAnimation}
+    >
       <Booker
-        locationUrl='25 Carbery Drive'
         customClassNames={{
-          // Main containers
           bookerContainer: "!bg-[#0C0A09] !border !border-solid !border-orange-500/30 !rounded-lg custom-grid !text-white",
           datePickerCustomClassNames: {
             datePickerDatesActive: "!bg-orange-500 hover:opacity-80 !text-white",
@@ -58,7 +83,6 @@ export const BarberBooker = (
               "!bg-orange-500 hover:!bg-orange-600 !rounded-lg !font-medium !transition-all !duration-200 !text-white",
           },
         }}
-        // use url params to get the correct event-type
         eventSlug={eventTypes.find(e => e.slug === eventSlug)?.slug ?? eventTypes[0]?.slug ?? ""}
         username={calAccount.username}
         onCreateBookingSuccess={(booking) => {
@@ -70,7 +94,8 @@ export const BarberBooker = (
         rescheduleUid={rescheduleUid}
         {...rest}
       />
-    </>
+    </motion.div>
   );
 };
+
 export default BarberBooker;

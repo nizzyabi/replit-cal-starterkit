@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import { useGetBooking, useCancelBooking } from "@calcom/atoms";
+import { useCancelBooking, useBooking} from "@calcom/atoms";
 import dayjs from "dayjs";
 import { Check, ExternalLinkIcon, Loader, X } from "lucide-react";
 import Link from "next/link";
@@ -18,11 +18,11 @@ export const BookingResult = (props: {
   fromReschedule?: string;
 }) => {
   const params = useParams<{ barberUsername: string; bookingUid: string }>();
-  const barberUsername = props?.barberusername ?? params.barberUsername;
-  const bookingUid = props?.bookingUid ?? params.bookingUid;
+  const barberUsername = props?.barberusername ?? params?.barberUsername;
+  const bookingUid = props?.bookingUid ?? params?.bookingUid;
   const searchParams = useSearchParams();
   const fromReschedule = props?.fromReschedule ?? searchParams.get("fromReschedule");
-  const { isLoading, data: booking, refetch } = useGetBooking(bookingUid ?? "");
+  const { isLoading, data: booking, refetch } = useBooking(bookingUid ?? "");
   // TODO: We're doing this to cast the type since @calcom/atoms doesn't type them properly
   const bookingStatus = booking && "status" in booking ? (booking.status as BookingStatus) : undefined;
   const { mutate: cancelBooking } = useCancelBooking({
@@ -32,7 +32,7 @@ export const BookingResult = (props: {
     },
   });
   //   [@calcom] The API returns the UID of the previous booking in case you'd like to show changed booking details in your UI.
-  const bookingPrevious = useGetBooking(fromReschedule ?? "");
+  const bookingPrevious = useBooking(fromReschedule ?? "");
   if (!bookingUid) {
     return <div>No Booking UID.</div>;
   }
@@ -50,16 +50,15 @@ export const BookingResult = (props: {
     ? stripCalOAuthClientIdFromText(bookingPrevious?.data?.title)
     : null;
 
-  const when = `${dayjs(booking.startTime).format("dddd, MMMM DD YYYY @ h:mma")} (${booking?.user?.timeZone})`;
+  const when = `${dayjs(booking.start).format("dddd, MMMM DD YYYY @ h:mma")} (${Intl.DateTimeFormat().resolvedOptions().timeZone})`;
   const formerWhen = bookingPrevious.data
-    ? `${dayjs(bookingPrevious.data.startTime).format("dddd, MMMM DD YYYY @ h:mma")} (${bookingPrevious?.data?.user?.timeZone})`
+    ? `${dayjs(bookingPrevious.data.start).format("dddd, MMMM DD YYYY @ h:mma")} (${bookingPrevious?.data?.user?.timeZone})`
     : null;
 
   const who = {
-    host: `${booking?.user?.name} (Host) - ${stripCalOAuthClientIdFromEmail(booking?.user?.email ?? "")}`,
+    host: `Barber: ${booking?.hosts?.[0]?.name} ${stripCalOAuthClientIdFromEmail(booking?.user?.email ?? "")}`,
     attendees: booking.attendees.map(
-      (attendee) => `${attendee.name ? `${stripCalOAuthClientIdFromText(attendee.name)} - ` : ""} 
-${stripCalOAuthClientIdFromEmail(attendee.email)}`
+      (attendee) => `Booker: ${attendee.name ? `${stripCalOAuthClientIdFromText(attendee.name)}` : ""}`
     ),
   };
   const formerWho = bookingPrevious?.data
@@ -100,7 +99,7 @@ ${stripCalOAuthClientIdFromEmail(previousAttendee.email)}`
         <Separator className="mb-8" />
         <div className="grid gap-3">
           <ul className="grid gap-3">
-            <li className="flex flex-col">
+            {/* <li className="flex flex-col">
               <span className="space-y-0.5 font-semibold">What</span>
               {formerWhat !== what && (
                 <span className={cn("text-muted-foreground line-through")}>{formerWhat}</span>
@@ -112,7 +111,7 @@ ${stripCalOAuthClientIdFromEmail(previousAttendee.email)}`
                 )}>
                 {what}
               </span>
-            </li>
+            </li> */}
             <li className="flex flex-col">
               <span className="space-y-0.5 font-semibold">When</span>
               {formerWhen !== when && (
@@ -142,9 +141,6 @@ ${stripCalOAuthClientIdFromEmail(previousAttendee.email)}`
                     className={cn(
                       "text-muted-foreground",
                       bookingStatus?.toLowerCase() === "cancelled" && "line-through"
-                      // // if the attendee is not in the previous booking, we'll highlight them
-                      // formerWho?.attendees?.findIndex((formerAttendee) => formerAttendee === attendee) ===
-                      //   -1 && "font-semibold italic"
                     )}>
                     {attendee}
                     {formerWho?.attendees?.findIndex((formerAttendee) => formerAttendee === attendee) ===
@@ -155,13 +151,11 @@ ${stripCalOAuthClientIdFromEmail(previousAttendee.email)}`
                 ))}
                 {formerWho?.attendees?.map(
                   (formerAttendee, idx) =>
-                    // if the attendee is in the current booking, we've already displayed them
                     who.attendees.findIndex((attendee) => attendee === formerAttendee) === -1 && (
                       <li
                         key={idx}
                         className={cn(
                           "text-muted-foreground",
-                          // if the attendee is not in the current booking, we'll strike them out
                           who.attendees.findIndex((attendee) => attendee === formerAttendee) === -1 &&
                             "line-through"
                         )}>
@@ -173,51 +167,7 @@ ${stripCalOAuthClientIdFromEmail(previousAttendee.email)}`
             </li>
             <li className="flex flex-col">
               <span className="space-y-0.5 font-semibold">Where</span>
-              {/* Display the previous location only if it's different from the current booking */}
-              {bookingPrevious.data?.location !== booking.location && (
-                <span className={cn("text-muted-foreground")}>
-                  {bookingPrevious.data?.location === "integrations:daily" ? (
-                    <span className="border-b-0 border-transparent hover:border-b hover:border-current">
-                      <Link
-                        className={cn("inline-flex items-center gap-1")}
-                        href={
-                          (bookingPrevious.data?.metadata as { videoCallUrl?: string })?.videoCallUrl ?? "#"
-                        }>
-                       25 carbery
-                      </Link>
-                    </span>
-                  ) : (
-                    bookingPrevious.data?.location
-                  )}
-                </span>
-              )}
-              {/* Display the location of the current booking */}
-              <span
-                className={cn(
-                  "text-muted-foreground",
-                  bookingPrevious.data?.location !== booking.location && "line-through"
-                )}>
-                {booking?.location === "integrations:daily" ? (
-                  <span className="border-b-0 border-transparent hover:border-b hover:border-current">
-                    <Link
-                      className={cn(
-                        "inline-flex items-center gap-1",
-                        bookingStatus?.toLowerCase() === "cancelled" && "line-through",
-                        bookingStatus?.toLowerCase() === "cancelled" && "cursor-not-allowed"
-                      )}
-                      href={
-                        bookingStatus?.toLowerCase() === "cancelled"
-                          ? "#"
-                          : (booking?.metadata as { videoCallUrl?: string })?.videoCallUrl ?? "#"
-                      }>
-                      
-                      <ExternalLinkIcon className="size-4" />
-                    </Link>
-                  </span>
-                ) : (
-                  booking.location
-                )}
-              </span>
+              <span className="text-muted-foreground">2203 Sunset Blvd, Los Angeles, CA 90026</span>
             </li>
             {booking.description && (
               <li className="flex flex-col">
@@ -247,7 +197,7 @@ ${stripCalOAuthClientIdFromEmail(previousAttendee.email)}`
             <span>
               {" "}
               See{" "}
-              <Link href={`/${barberUsername}`} className="underline">
+              <Link href={`/${barberUsername}/${bookingUid}`} className="underline">
                 availabilities
               </Link>
             </span>
@@ -257,10 +207,10 @@ ${stripCalOAuthClientIdFromEmail(previousAttendee.email)}`
             <span>Need to make changes?</span>
             <span>
               {" "}
-              <Link href={`/${barberUsername}?rescheduleUid=${bookingUid}`} className="underline">
+              {/* <Link href={`/${barberUsername}?rescheduleUid=${bookingUid}`} className="underline">
                 Reschedule
-              </Link>{" "}
-              or{" "}
+              </Link>{" "} */}
+              {/* or{" "} */}
               <div
                 className="cursor-pointer underline"
                 onClick={() => {

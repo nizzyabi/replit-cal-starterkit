@@ -62,7 +62,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <TailwindIndicator /> 
         </Providers>
         <Toaster />
-        <Footer />
       </body>
       <Analytics />
     </html>

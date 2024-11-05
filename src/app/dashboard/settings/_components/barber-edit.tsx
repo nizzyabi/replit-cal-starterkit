@@ -9,7 +9,7 @@ import { useActionState } from "react";
 
 export default function BarberEditForm(props: InputProps | TextareaProps) {
   const [state, submitAction, isPendingAction] = useActionState<
-    { error: null | string } | { success: null | string },
+    { error: null | string } | { success: null | string | any },
     FormData
   >(barberEdit, { error: null }, "/dashboard/settings/profile");
 

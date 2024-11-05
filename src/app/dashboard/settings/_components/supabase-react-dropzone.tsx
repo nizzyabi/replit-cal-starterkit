@@ -44,29 +44,12 @@ export default function SupabaseReactDropzone({ userId }: { userId: string; user
     },
   });
 
-  // const acceptedFileItems = acceptedFiles.map((file) => (
-  //   <li key={file.path}>
-  //     {file.path} - {file.size} bytes
-  //   </li>
-  // ));
-
-  // const fileRejectionItems = fileRejections.map(({ file, errors }) => (
-  //   <li key={file.path}>
-  //     {file.path} - {file.size} bytes
-  //     <ul>
-  //       {errors.map((e) => (
-  //         <li key={e.code}>{e.message}</li>
-  //       ))}
-  //     </ul>
-  //   </li>
-  // ));
-
   return (
-    <div className="mx-auto grid w-full gap-4">
+    <div className="mx-auto grid w-full gap-4 mt-2">
       {status === "error" ? (
-        <div className="aspect-square size-16 rounded-md bg-muted" />
+        <></>
       ) : status === "loading" || !avatar ? (
-        <Skeleton className="aspect-square size-16 rounded-md" />
+        <></>
       ) : (
         <Image
           alt="Barber image"
